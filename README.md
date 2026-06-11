@@ -6,9 +6,7 @@
 ## Структура
 
 ```
-index.html            — лендинг (единственная страница)
-styles.css            — стили
-main.js               — scroll-cinematic движок (canvas + покадровая анимация скроллом)
+index.html            — весь сайт в одном файле (разметка + стили + движок)
 assets/frames/hero/   — 120 кадров хиро-сцены (1920×1080 JPEG)
 assets/frames/flow/   — 96 кадров сцены «хаос → порядок»
 assets/frames/rise/   — 96 кадров сцены «восхождение»
