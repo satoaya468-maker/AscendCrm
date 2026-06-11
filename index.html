@@ -68,9 +68,17 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%)}
 .header-inner{display:flex;justify-content:space-between;align-items:center;gap:16px}
 
-/* ---------- Cinematic-секции ---------- */
+/* ---------- Cinematic-секции (лента рисуется на канвасе живым кодом) ---------- */
 .cine-track{position:relative}
-.cine-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.cine-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:radial-gradient(ellipse 60% 60% at 85% 30%,rgba(251,191,36,.10),transparent 65%),
+    radial-gradient(ellipse 50% 45% at 10% 95%,rgba(10,10,10,.04),transparent 65%),#fff}
+.cine[data-scene="flow"] .cine-sticky{
+  background:radial-gradient(ellipse 65% 60% at 70% 50%,rgba(251,191,36,.08),transparent 65%),
+    radial-gradient(ellipse 50% 45% at 5% 10%,rgba(10,10,10,.035),transparent 65%),#fff}
+.cine[data-scene="rise"] .cine-sticky{
+  background:radial-gradient(ellipse 55% 50% at 88% 16%,rgba(251,191,36,.16),transparent 65%),
+    radial-gradient(ellipse 50% 45% at 8% 92%,rgba(10,10,10,.04),transparent 65%),#fff}
 .cine-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 /* Подписи поверх канваса */
@@ -369,7 +377,7 @@ img{max-width:100%;display:block}
 <main id="top">
 
 <!-- ======================= HERO · cinematic scroll ======================= -->
-<section class="cine cine-hero" data-scene="hero" data-path="assets/frames/hero/hero_" data-frames="120" data-track="300">
+<section class="cine cine-hero" data-scene="hero" data-track="300">
   <div class="cine-track">
     <div class="cine-sticky">
       <canvas class="cine-canvas" aria-hidden="true"></canvas>
@@ -471,7 +479,7 @@ img{max-width:100%;display:block}
 </section>
 
 <!-- ======================= CINEMATIC · поток ======================= -->
-<section class="cine" data-scene="flow" data-path="assets/frames/flow/flow_" data-frames="96" data-track="280">
+<section class="cine" data-scene="flow" data-track="280">
   <div class="cine-track">
     <div class="cine-sticky">
       <canvas class="cine-canvas" aria-hidden="true"></canvas>
@@ -606,7 +614,7 @@ img{max-width:100%;display:block}
 </section>
 
 <!-- ======================= CINEMATIC · восхождение ======================= -->
-<section class="cine" data-scene="rise" data-path="assets/frames/rise/rise_" data-frames="96" data-track="280">
+<section class="cine" data-scene="rise" data-track="280">
   <div class="cine-track">
     <div class="cine-sticky">
       <canvas class="cine-canvas" aria-hidden="true"></canvas>
@@ -861,8 +869,9 @@ img{max-width:100%;display:block}
 
 <script>
 /* ============================================================
-   Scroll-cinematic движок: sticky-канвас + JPEG-кадры, листаемые
-   скроллом, с ленивой загрузкой, lerp-сглаживанием и подписями.
+   Scroll-cinematic движок: янтарная лента рисуется на канвасе
+   живым кодом (без файлов кадров) — скролл листает анимацию,
+   подписи появляются по прогрессу. Файл полностью автономен.
    ============================================================ */
 (function () {
   "use strict";
@@ -897,23 +906,165 @@ img{max-width:100%;display:block}
   }
 
   /* ---------- Утилиты ---------- */
+  var TAU = Math.PI * 2;
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function smooth(x) { x = clamp01(x); return x * x * (3 - 2 * x); }
+  function easeInOut(x) { return x * x * (3 - 2 * x); }
+  function sstep(e0, e1, x) { return smooth((x - e0) / (e1 - e0)); }
+
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------- Лента: фирменная палитра и геометрия нитей ---------- */
+  // Золото → янтарь → апельсин → глубокий оранж → роза
+  var PALETTE = [[255, 210, 90], [255, 199, 46], [255, 158, 44], [255, 122, 26], [253, 164, 175]];
+
+  function paletteColor(u, lighten, alpha) {
+    var n = PALETTE.length;
+    var x = ((u % 1) + 1) % 1 * n;
+    var i = Math.floor(x) % n;
+    var f = x - Math.floor(x);
+    f = f * f * (3 - 2 * f);
+    var a = PALETTE[i], b = PALETTE[(i + 1) % n];
+    var r = a[0] + (b[0] - a[0]) * f + 0;
+    var g = a[1] + (b[1] - a[1]) * f;
+    var bl = a[2] + (b[2] - a[2]) * f;
+    r += (255 - r) * lighten; g += (255 - g) * lighten; bl += (255 - bl) * lighten;
+    return "rgba(" + (r | 0) + "," + (g | 0) + "," + (bl | 0) + "," + alpha.toFixed(3) + ")";
+  }
+
+  // y нити в точке s (0..1 вдоль кадра); struct — прогресс скролла,
+  // phase — «время» волн (растёт и от скролла, и от часов — лента всегда живая)
+  function threadY(scene, s, lane, ph, speed, struct, phase) {
+    var spine, width, twist, off, wave;
+    if (scene === "hero") {
+      spine = 0.86 - 0.62 * easeInOut(s) + 0.05 * Math.sin(s * 2.4 + 0.6);
+      width = 0.105 * (0.62 + 0.38 * Math.sin(Math.PI * Math.min(1, s * 1.06)));
+      twist = Math.cos(s * 5.2 + ph * 0.22 + phase * TAU);
+      off = lane * width * twist;
+      wave = 0.020 * Math.sin(s * 9 + ph + phase * TAU * 2 * speed)
+           + 0.011 * Math.sin(s * 17 - ph * 1.4 + phase * TAU * 3);
+      return spine + off + wave * (0.45 + 0.55 * Math.abs(lane));
+    }
+    if (scene === "flow") {
+      var startY = 0.52 + Math.sin(ph * 3.1) * 0.34;         // стартовый разброс
+      var conv = sstep(0.18, 0.62 + 0.04 * Math.sin(phase * TAU), s);
+      spine = 0.52 - 0.10 * easeInOut(s);
+      var base = startY + (spine - startY) * conv;
+      width = 0.085 * (0.55 + 0.45 * Math.sin(Math.PI * s));
+      twist = Math.cos(s * 6 + ph * 0.3 + phase * TAU);
+      off = lane * width * (0.35 + 0.65 * conv) * twist;
+      var calm = 1 - 0.72 * conv;                            // после слияния — покой
+      wave = (0.034 * Math.sin(s * 7.5 + ph + phase * TAU * 2.2 * speed)
+            + 0.016 * Math.sin(s * 15 - ph + phase * TAU * 3.4)) * calm;
+      return base + off + wave;
+    }
+    // rise: к финалу скролла хвост поднимается выше
+    var lift = 0.10 * easeInOut(clamp01(struct));
+    spine = 0.84 - (0.58 + lift) * Math.pow(easeInOut(clamp01((s - 0.06) / 0.86)), 1.15);
+    width = 0.095 * (0.70 + 0.30 * Math.sin(Math.PI * s)) * (1 - 0.35 * s);
+    twist = Math.cos(s * 4.6 + ph * 0.25 + phase * TAU * 0.9);
+    off = lane * width * twist;
+    wave = 0.018 * Math.sin(s * 8 + ph + phase * TAU * 1.8 * speed)
+         + 0.009 * Math.sin(s * 16 - ph * 1.2 + phase * TAU * 2.6);
+    return spine + off + wave * (0.5 + 0.5 * Math.abs(lane));
+  }
+
+  var SCENE_CFG = { hero: { n: 86, seed: 11 }, flow: { n: 92, seed: 23 }, rise: { n: 80, seed: 37 } };
+
+  function Ribbon(scene, canvas) {
+    this.scene = scene;
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
+    this.off = document.createElement("canvas");
+    this.offCtx = this.off.getContext("2d");
+    this.canBlur = typeof this.offCtx.filter === "string";
+
+    var small = window.innerWidth < 700;
+    var cfg = SCENE_CFG[scene];
+    var n = small ? Math.round(cfg.n * 0.55) : cfg.n;
+    this.samples = small ? 110 : 160;
+
+    var rand = mulberry32(cfg.seed);
+    this.threads = [];
+    for (var i = 0; i < n; i++) {
+      var u = (n === 1 ? 0 : -1 + 2 * i / (n - 1)) + (rand() * 2 - 1) * 0.012;
+      this.threads.push({
+        lane: Math.tanh(u * 1.7) / Math.tanh(1.7),  // сгущение к центру ленты
+        ph: rand() * TAU,
+        speed: 0.8 + rand() * 0.45,
+        hue: (rand() * 2 - 1) * 0.06
+      });
+    }
+    // Крайние нити рисуем первыми — центральные лягут поверх
+    this.threads.sort(function (a, b) { return Math.abs(b.lane) - Math.abs(a.lane); });
+  }
+
+  Ribbon.prototype.draw = function (struct, phase) {
+    var w = this.canvas.width, h = this.canvas.height;
+    if (!w || !h) return;
+    var o = this.offCtx;
+    o.clearRect(0, 0, w, h);
+    o.lineCap = "round";
+    o.lineJoin = "round";
+    var scale = h / 1080;
+    var gx0 = -0.08 * w, gx1 = 1.08 * w;
+
+    for (var k = 0; k < this.threads.length; k++) {
+      var th = this.threads[k];
+      var edge = Math.abs(th.lane);
+      var alpha = 0.92 - 0.55 * Math.pow(edge, 1.6);
+      var lighten = 0.42 * edge * edge;                // крайние — светлее (глубина)
+      var grad = o.createLinearGradient(gx0, 0, gx1, 0);
+      for (var g = 0; g <= 7; g++) {
+        var xg = -0.08 + 1.16 * (g / 7);
+        grad.addColorStop(g / 7,
+          paletteColor(0.18 + xg * 0.5 + th.lane * 0.16 + th.hue + phase * 0.22, lighten, alpha));
+      }
+      o.strokeStyle = grad;
+      o.lineWidth = Math.max(1, (4.6 - 2.4 * edge) * scale);
+      o.beginPath();
+      for (var j = 0; j < this.samples; j++) {
+        var s = j / (this.samples - 1);
+        var x = (-0.08 + 1.16 * s) * w;
+        var y = threadY(this.scene, s, th.lane, th.ph, th.speed, struct, phase) * h;
+        if (j) o.lineTo(x, y); else o.moveTo(x, y);
+      }
+      o.stroke();
+    }
+
+    // Мягкое свечение: размытая копия под резким слоем
+    var c = this.ctx;
+    c.clearRect(0, 0, w, h);
+    if (this.canBlur) {
+      c.filter = "blur(" + (12 * scale).toFixed(1) + "px)";
+      c.globalAlpha = 0.6;
+      c.drawImage(this.off, 0, 0);
+      c.filter = "none";
+    } else {
+      c.globalAlpha = 0.3;
+      c.drawImage(this.off, -2 * scale, 2 * scale);
+      c.drawImage(this.off, 2 * scale, -2 * scale);
+    }
+    c.globalAlpha = 1;
+    c.drawImage(this.off, 0, 0);
+  };
 
   /* ---------- Плеер одной cinematic-секции ---------- */
   function CinePlayer(section) {
     this.section = section;
     this.canvas = section.querySelector(".cine-canvas");
-    this.ctx = this.canvas.getContext("2d");
     this.track = section.querySelector(".cine-track");
-    this.path = section.dataset.path;
-    this.total = parseInt(section.dataset.frames, 10);
     this.track.style.height = (parseInt(section.dataset.track, 10) || 280) + "vh";
-
-    this.images = new Array(this.total);
-    this.current = 0;             // плавный (дробный) кадр
-    this.drawnFrame = -1;
+    this.ribbon = new Ribbon(section.dataset.scene, this.canvas);
     this.visible = false;
+    this.lastPhase = null;
     this.heroOverlay = section.querySelector("[data-hero-fade]");
     this.caps = Array.prototype.map.call(section.querySelectorAll(".cap"), function (el) {
       return {
@@ -922,56 +1073,17 @@ img{max-width:100%;display:block}
         to: parseFloat(el.dataset.to)
       };
     });
-
     this.resize();
-    this.bootstrap();
   }
 
-  CinePlayer.prototype.src = function (i) {
-    return this.path + String(i).padStart(4, "0") + ".jpg";
-  };
-
-  CinePlayer.prototype.load = function (i, cb) {
-    if (this.images[i]) return;
-    var img = new Image();
-    img.decoding = "async";
-    var self = this;
-    img.onload = function () { if (cb) cb(); self.dirty = true; };
-    img.src = this.src(i);
-    this.images[i] = img;
-  };
-
-  /* Загрузка волнами: каркас из каждого 8-го кадра, затем всё остальное */
-  CinePlayer.prototype.bootstrap = function () {
-    var self = this;
-    this.load(0, function () { self.dirty = true; });
-    if (reducedMotion) return;                       // достаточно постера
-    var step;
-    for (step = 0; step < this.total; step += 8) this.load(step);
-    var fill = function () {
-      for (var i = 0; i < self.total; i++) self.load(i);
-    };
-    if (document.readyState === "complete") setTimeout(fill, 400);
-    else window.addEventListener("load", function () { setTimeout(fill, 400); });
-  };
-
-  CinePlayer.prototype.nearest = function (target) {
-    var img = this.images[target];
-    if (img && img.complete && img.naturalWidth) return target;
-    for (var d = 1; d < this.total; d++) {
-      var lo = target - d, hi = target + d;
-      if (lo >= 0) { img = this.images[lo]; if (img && img.complete && img.naturalWidth) return lo; }
-      if (hi < this.total) { img = this.images[hi]; if (img && img.complete && img.naturalWidth) return hi; }
-    }
-    return -1;
-  };
-
   CinePlayer.prototype.resize = function () {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
     var w = this.canvas.clientWidth, h = this.canvas.clientHeight;
     if (!w || !h) { w = window.innerWidth; h = window.innerHeight; }
     this.canvas.width = Math.round(w * dpr);
     this.canvas.height = Math.round(h * dpr);
+    this.ribbon.off.width = this.canvas.width;
+    this.ribbon.off.height = this.canvas.height;
     this.dirty = true;
   };
 
@@ -982,18 +1094,7 @@ img{max-width:100%;display:block}
     return clamp01(-rect.top / span);
   };
 
-  CinePlayer.prototype.drawFrame = function (idx) {
-    var img = this.images[idx];
-    if (!img || !img.complete || !img.naturalWidth) return;
-    var cw = this.canvas.width, ch = this.canvas.height;
-    var iw = img.naturalWidth, ih = img.naturalHeight;
-    var s = Math.max(cw / iw, ch / ih);
-    var dw = iw * s, dh = ih * s;
-    this.ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-    this.drawnFrame = idx;
-  };
-
-  CinePlayer.prototype.tick = function () {
+  CinePlayer.prototype.tick = function (clock) {
     var p = this.progress();
 
     // Хиро-оверлей растворяется в начале скролла
@@ -1015,15 +1116,13 @@ img{max-width:100%;display:block}
       c.el.style.setProperty("--dy", (26 * (1 - o)).toFixed(1) + "px");
     }
 
-    // Кадр: lerp к целевому
-    var target = p * (this.total - 1);
-    if (reducedMotion) target = 0;
-    this.current += (target - this.current) * 0.22;
-    if (Math.abs(target - this.current) < 0.5) this.current = target;
-    var idx = this.nearest(Math.round(this.current));
-    if (idx >= 0 && (idx !== this.drawnFrame || this.dirty)) {
+    // Лента: скролл двигает волны, часы добавляют лёгкое «дыхание»
+    var phase = reducedMotion ? 0.35 : p + clock * 0.03;
+    var struct = reducedMotion ? 0.35 : p;
+    if (this.dirty || this.lastPhase === null || Math.abs(phase - this.lastPhase) > 0.0004) {
+      this.ribbon.draw(struct, phase);
+      this.lastPhase = phase;
       this.dirty = false;
-      this.drawFrame(idx);
     }
   };
 
@@ -1053,9 +1152,10 @@ img{max-width:100%;display:block}
     }, 120);
   });
 
-  function loop() {
+  function loop(ts) {
+    var clock = (ts || 0) / 1000;
     for (var i = 0; i < players.length; i++) {
-      if (players[i].visible) players[i].tick();
+      if (players[i].visible) players[i].tick(clock);
     }
     requestAnimationFrame(loop);
   }
