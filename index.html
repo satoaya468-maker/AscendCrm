@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascend CRM — клиенты, записи и отзывы в одной системе</title>
+<meta name="description" content="Ascend CRM — система управления клиентами от Ascend Systems: база клиентов, календарь записей, рассылки по сегментам и сбор 5-звёздочных отзывов. Создано для локального бизнеса.">
+<meta property="og:title" content="Ascend CRM — клиенты, записи и отзывы в одной системе">
+<meta property="og:description" content="База клиентов, календарь записей, рассылки и сбор 5★ отзывов — в одном кабинете. От создателей ascendsystems.ru.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzE4MTgxZCIvPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmYzYyZSIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTkgMTcgMTYgMTFsNyA2Ii8+PHBhdGggZD0iTTkgMjIuNSAxNiAxNi41bDcgNiIvPjwvZz48L3N2Zz4=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ======================= HEADER: только вход ======================= -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a class="logo" href="#top" aria-label="Ascend CRM — на главную">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="60%" height="60%" fill="none">
+          <path d="M4.5 12.5 12 6l7.5 6.5" stroke="#ffc62e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.5 18 12 11.5 19.5 18" stroke="#ffc62e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="logo-text">Ascend&nbsp;CRM</span>
+    </a>
+    <!-- Адрес личного кабинета: замените login.html на реальный URL входа в CRM -->
+    <a class="btn btn-login" href="login.html">
+      Войти
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======================= HERO · cinematic scroll ======================= -->
+<section class="cine cine-hero" data-scene="hero" data-path="assets/frames/hero/hero_" data-frames="120" data-track="300">
+  <div class="cine-track">
+    <div class="cine-sticky">
+      <canvas class="cine-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero-overlay" data-hero-fade>
+        <div class="container">
+          <div class="hero-content">
+            <a class="hero-eyebrow" href="https://ascendsystems.ru/" target="_blank" rel="noopener">
+              От создателей ascendsystems.ru
+            </a>
+            <h1>CRM, с&nbsp;которой бизнес идёт <span class="underline">вверх</span></h1>
+            <p class="hero-sub">Клиенты, записи, рассылки и&nbsp;отзывы — в&nbsp;одном кабинете.
+              Без&nbsp;лишних кнопок и&nbsp;обучения: открыли — и&nbsp;работаете.</p>
+            <div class="hero-cta">
+              <a class="btn btn-dark btn-large" href="login.html">Войти в кабинет
+                <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a class="btn btn-outline btn-large" href="#features">Что внутри</a>
+            </div>
+            <div class="trust-row">
+              <span class="trust-item"><span class="stars">★★★★★</span> Яндекс</span>
+              <span class="trust-divider"></span>
+              <span class="trust-item"><span class="stars">★★★★★</span> Google</span>
+              <span class="trust-divider"></span>
+              <span class="trust-item"><span class="stars">★★★★★</span> 2ГИС</span>
+              <span class="trust-divider"></span>
+              <span class="trust-item">Сделано в Магнитогорске</span>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint" aria-hidden="true"><span></span></div>
+      </div>
+
+      <div class="cap pos-bl" data-from="0.30" data-to="0.62">
+        <h3>Одна система вместо блокнотов, таблиц и&nbsp;чатов</h3>
+        <p>Всё, что нужно знать о&nbsp;клиенте, — в&nbsp;двух кликах.</p>
+      </div>
+      <div class="cap pos-br" data-from="0.68" data-to="0.97">
+        <h3>Телефон, планшет, компьютер</h3>
+        <p>87%&nbsp;клиентов заходят с&nbsp;телефона. Ваш кабинет — тоже всегда под&nbsp;рукой.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ВОЗМОЖНОСТИ ======================= -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Что внутри</span>
+      <h2 class="section-title">Только то, что приносит клиентов и&nbsp;экономит время</h2>
+      <p class="section-sub">Никакой учёной степени не&nbsp;нужно. Каждый раздел Ascend&nbsp;CRM решает одну понятную задачу — и&nbsp;решает её&nbsp;хорошо.</p>
+    </div>
+    <div class="features-grid">
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.7"/><path d="M16.4 14.7c2.3.2 3.8 1.5 4.2 3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </div>
+        <h3>База клиентов</h3>
+        <p>Имя, телефон, история визитов, суммы и&nbsp;заметки. Статусы «Новый», «Активный», «VIP» — сразу видно, с&nbsp;кем говорить в&nbsp;первую очередь.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7.5 13.5h3M7.5 16.8h5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Календарь записей</h3>
+        <p>Неделя с&nbsp;30-минутными слотами: новые, подтверждённые, выполненные. Выручка недели считается сама — прямо над&nbsp;календарём.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="m4.5 7.5 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Рассылки по сегментам</h3>
+        <p>Все, только VIP или те, кто пропал на&nbsp;30&nbsp;дней. Шаблоны с&nbsp;переменными {имя}, {услуга}, {дата} — пара кликов, и&nbsp;сообщение ушло.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m12 3.6 2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.2 6.9 19l1.1-5.6-4.2-3.9 5.7-.7L12 3.6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Сбор 5★ отзывов</h3>
+        <p>Система сама просит отзыв и&nbsp;вежливо напоминает, пока клиент не&nbsp;дойдёт до&nbsp;публикации. Пятёрки — на&nbsp;Яндекс и&nbsp;Google, недовольные — к&nbsp;вам напрямую.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3.8 10.6c-.8.3-.75 1.45.07 1.7l4.63 1.4 1.5 4.7c.25.8 1.35.85 1.7.1L21 4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.5 13.7 12-9.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Уведомления в Telegram</h3>
+        <p>Заявки и&nbsp;запросы отзывов летят прямо в&nbsp;ваш чат. Видите всё важное, даже не&nbsp;открывая кабинет.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 5 6.2v5.1c0 4.3 3 7.5 7 9.2 4-1.7 7-4.9 7-9.2V6.2L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9.2 12 2 2 3.6-3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Роли и кабинеты</h3>
+        <p>Администратор управляет партнёрами и&nbsp;видит статистику по&nbsp;каждому. У&nbsp;партнёра — свой кабинет и&nbsp;своя база. Никто никому не&nbsp;мешает.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CINEMATIC · поток ======================= -->
+<section class="cine" data-scene="flow" data-path="assets/frames/flow/flow_" data-frames="96" data-track="280">
+  <div class="cine-track">
+    <div class="cine-sticky">
+      <canvas class="cine-canvas" aria-hidden="true"></canvas>
+      <div class="cap pos-tl" data-from="0.04" data-to="0.34">
+        <h3>Каждый звонок, заявка и&nbsp;визит — в&nbsp;одной базе</h3>
+        <p>Ничего не&nbsp;теряется: статусы, суммы и&nbsp;заметки хранятся по&nbsp;каждому клиенту.</p>
+      </div>
+      <div class="cap pos-br" data-from="0.38" data-to="0.66">
+        <h3>Сегменты вместо хаоса</h3>
+        <p>Новые, активные, VIP и&nbsp;«пропавшие» — рассылка нужным людям в&nbsp;пару кликов.</p>
+      </div>
+      <div class="cap pos-c" data-from="0.72" data-to="0.97">
+        <h3>Порядок — это деньги</h3>
+        <p>Меньше рутины — больше повторных визитов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ЦИФРЫ ======================= -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="stat-value">1&nbsp;неделя</div><div class="stat-label">от первого звонка до&nbsp;запуска системы</div></div>
+      <div class="stat reveal"><div class="stat-value">4.9★</div><div class="stat-label">средний рейтинг клиентов Ascend</div></div>
+      <div class="stat reveal"><div class="stat-value">24/7</div><div class="stat-label">кабинет доступен с&nbsp;любого устройства</div></div>
+      <div class="stat reveal"><div class="stat-value">0&nbsp;₽</div><div class="stat-label">за обучение и&nbsp;поддержку — включены</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CINEMATIC · восхождение ======================= -->
+<section class="cine" data-scene="rise" data-path="assets/frames/rise/rise_" data-frames="96" data-track="280">
+  <div class="cine-track">
+    <div class="cine-sticky">
+      <canvas class="cine-canvas" aria-hidden="true"></canvas>
+      <div class="cap pos-tl" data-from="0.04" data-to="0.34">
+        <h3>Выручка недели — перед глазами</h3>
+        <p>Календарь сам считает подтверждённые и&nbsp;выполненные записи.</p>
+      </div>
+      <div class="cap pos-br" data-from="0.38" data-to="0.66">
+        <h3>Рейтинг растёт на автопилоте</h3>
+        <p>Запросы отзывов уходят сами — пятёрки копятся, позиции в&nbsp;картах растут.</p>
+      </div>
+      <div class="cap pos-c" data-from="0.72" data-to="0.97">
+        <h3>Ascend — значит «восхождение»</h3>
+        <p>Начните своё — вместе с&nbsp;Ascend&nbsp;Systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ТАРИФЫ ======================= -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header center">
+      <span class="section-eyebrow">Тарифы</span>
+      <h2 class="section-title">Ascend CRM входит в&nbsp;подписку Ascend&nbsp;Systems</h2>
+      <p class="section-sub">CRM не&nbsp;продаётся отдельно — она часть системы: сайт, маркетинг и&nbsp;кабинет в&nbsp;одной подписке.
+        Никаких длинных контрактов: остановить можно в&nbsp;любой момент.</p>
+    </div>
+    <div class="pricing-grid">
+      <article class="price-card reveal">
+        <h3>Базовый</h3>
+        <div class="price"><span class="price-num">9&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
+        <ul>
+          <li>Премиум-сайт с адаптивом</li>
+          <li>Хостинг и домен включены</li>
+          <li>Карточки Яндекс и 2ГИС</li>
+          <li>Локальное SEO</li>
+          <li>Бесплатные правки контента</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать базовый</a>
+      </article>
+      <article class="price-card popular reveal">
+        <div class="badge-popular">Популярный выбор</div>
+        <h3>Стандарт</h3>
+        <div class="price"><span class="price-num">14&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
+        <ul>
+          <li>Всё из тарифа «Базовый»</li>
+          <li class="li-crm">Кабинет Ascend CRM</li>
+          <li>Система сбора 5★ отзывов</li>
+          <li>Ответный текст на пропущенный звонок</li>
+          <li>Заявки в Telegram мгновенно</li>
+          <li>Ежемесячный отчёт о результатах</li>
+        </ul>
+        <a class="btn btn-dark btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать стандарт</a>
+      </article>
+      <article class="price-card reveal">
+        <h3>Pro</h3>
+        <div class="price"><span class="price-num">19&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
+        <ul>
+          <li>Всё из тарифа «Стандарт»</li>
+          <li class="li-crm">Кабинет Ascend CRM</li>
+          <li>Продвижение в Яндекс и 2ГИС</li>
+          <li>Реклама в Яндекс.Директ</li>
+          <li>Расширенное SEO и контент</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать Pro</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ОБ ASCEND SYSTEMS ======================= -->
+<section class="about">
+  <div class="container">
+    <div class="about-card reveal">
+      <div class="about-text">
+        <span class="section-eyebrow">Кто мы</span>
+        <h2 class="section-title">Ascend CRM — продукт Ascend&nbsp;Systems</h2>
+        <p>Мы — команда из&nbsp;Магнитогорска. Делаем сайты и&nbsp;маркетинговые системы, которые приводят клиентов локальному бизнесу:
+          автосервисам, детейлингу, мастерам и&nbsp;студиям. Ascend&nbsp;CRM — сердце этой системы:
+          здесь живут ваши клиенты, записи и&nbsp;отзывы.</p>
+        <div class="about-chips">
+          <span>Сайты под ключ</span><span>Локальное SEO</span><span>Сбор отзывов</span><span>Ответ на пропущенный звонок</span>
+        </div>
+        <a class="btn btn-dark" href="https://ascendsystems.ru/" target="_blank" rel="noopener">ascendsystems.ru
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="about-visual" aria-hidden="true">
+        <div class="about-mark">
+          <svg viewBox="0 0 24 24" width="56%" height="56%" fill="none">
+            <path d="M4.5 12.5 12 6l7.5 6.5" stroke="#ffc62e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.5 18 12 11.5 19.5 18" stroke="#ffc62e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ФИНАЛЬНЫЙ CTA ======================= -->
+<section class="final-cta">
+  <div class="container">
+    <h2 class="section-title reveal">Хватит терять клиентов.<br>Начните привлекать.</h2>
+    <p class="section-sub reveal">Уже работаете с&nbsp;Ascend&nbsp;Systems — входите в&nbsp;кабинет.
+      Ещё нет — позвоните, покажем демо без&nbsp;обязательств.</p>
+    <div class="final-cta-buttons reveal">
+      <a class="btn btn-dark btn-large" href="login.html">Войти в кабинет
+        <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn-outline btn-large" href="tel:+79339828807">Позвонить: +7 (933) 982-88-07</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#top">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="60%" height="60%" fill="none">
+              <path d="M4.5 12.5 12 6l7.5 6.5" stroke="#ffc62e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4.5 18 12 11.5 19.5 18" stroke="#ffc62e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="logo-text">Ascend&nbsp;CRM</span>
+        </a>
+        <p>Система управления клиентами для локального бизнеса. Часть экосистемы Ascend&nbsp;Systems — сайты и&nbsp;маркетинговые системы, которые приводят клиентов.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <a href="tel:+79339828807">Давид · Founder<br>+7 (933) 982-88-07</a>
+        <a href="tel:+79030900798">Данил · Co-founder<br>+7 (903) 090-07-98</a>
+      </div>
+      <div class="footer-col">
+        <h4>Компания</h4>
+        <a href="https://ascendsystems.ru/" target="_blank" rel="noopener">ascendsystems.ru</a>
+        <a href="#pricing">Тарифы</a>
+        <a href="login.html">Войти в кабинет</a>
+        <p class="footer-note">Магнитогорск · работаем удалённо со&nbsp;всей Россией<br>Пн—Пт · 10:00—20:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ascend Systems</span>
+      <span>Сделано в Магнитогорске</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
