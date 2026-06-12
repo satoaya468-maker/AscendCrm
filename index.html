@@ -2,1165 +2,289 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ascend CRM — клиенты, записи и отзывы в одной системе</title>
-<meta name="description" content="Ascend CRM — простая система управления клиентами от Ascend Systems: база клиентов, календарь записей, рассылки по сегментам и сбор 5-звёздочных отзывов. Создано для локального бизнеса — без обучения и интеграторов.">
-<meta property="og:title" content="Ascend CRM — клиенты, записи и отзывы в одной системе">
-<meta property="og:description" content="База клиентов, календарь записей, рассылки и сбор 5★ отзывов — в одном кабинете. От создателей ascendsystems.ru.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>СПЕКТР — окна, балконы и ремонт под ключ в Магнитогорске</title>
+<meta name="description" content="ООО «СПЕКТР» — установка и остекление балконов, окна ПВХ, комплексный ремонт под ключ в Магнитогорске. На рынке с 2018 года. Бесплатный замер: +7 950 74-888-13.">
+<meta property="og:title" content="СПЕКТР — окна, балконы и ремонт под ключ в Магнитогорске">
+<meta property="og:description" content="Один подрядчик — весь объект: от замера до финальной приёмки. Гарантия на все работы и год бесплатного обслуживания.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:image" content="assets/og.jpg">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%230a0a0a'/><polyline points='6 17 12 11 18 17' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/><polyline points='6 11 12 5 18 11' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   Ascend CRM — лендинг. Фирменный стиль Ascend Systems:
-   белый фон, чёрный текст, янтарный акцент, Space Grotesk + Manrope.
-   ============================================================ */
-:root{
-  --bg:#ffffff;
-  --bg-2:#fafafa;
-  --bg-3:#f5f5f5;
-  --border:rgba(10,10,10,0.08);
-  --border-strong:rgba(10,10,10,0.15);
-  --text:#0a0a0a;
-  --text-muted:#525252;
-  --text-dim:#a3a3a3;
-  --amber:#ffc72e;
-  --amber-2:#ff9e2c;
-  --amber-glow:rgba(251,191,36,0.30);
-  --dark:#0a0a0a;
-  --display:'Space Grotesk',sans-serif;
-  --body:'Manrope',system-ui,sans-serif;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:400;line-height:1.5;
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
-img{max-width:100%;display:block}
-.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative}
-
-/* ---------- Кнопки ---------- */
-.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;background:var(--dark);color:#fff;
-  font-weight:700;font-size:14px;text-decoration:none;border-radius:10px;cursor:pointer;border:none;
-  font-family:var(--body);letter-spacing:-0.005em;transition:all .2s}
-.btn:hover{background:#252525;transform:translateY(-1px);box-shadow:0 12px 26px rgba(0,0,0,.16)}
-.btn-dark{background:var(--dark);color:#fff}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border-strong);box-shadow:none}
-.btn-outline:hover{background:var(--bg-3);border-color:var(--text);color:var(--text);box-shadow:none}
-.btn-large{padding:17px 30px;font-size:15px;border-radius:12px}
-.btn-block{width:100%;justify-content:center}
-.btn-login{padding:10px 20px}
-
-/* ---------- Логотип: чёрный знак с белыми шевронами (как у Ascend Systems) ---------- */
-.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text)}
-.logo-mark{width:37px;height:37px;background:var(--dark);border-radius:10px;display:flex;
-  align-items:center;justify-content:center;flex-shrink:0}
-.logo-text{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-0.02em}
-
-/* ---------- Header ---------- */
-.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 0;
-  background:transparent;border-bottom:1px solid transparent;
-  transition:background .3s,border-color .3s,backdrop-filter .3s}
-.header.scrolled{background:rgba(255,255,255,.84);border-bottom-color:var(--border);
-  backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%)}
-.header-inner{display:flex;justify-content:space-between;align-items:center;gap:16px}
-
-/* ---------- Cinematic-секции (лента рисуется на канвасе живым кодом) ---------- */
-.cine-track{position:relative}
-.cine-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
-  background:radial-gradient(ellipse 60% 60% at 85% 30%,rgba(251,191,36,.10),transparent 65%),
-    radial-gradient(ellipse 50% 45% at 10% 95%,rgba(10,10,10,.04),transparent 65%),#fff}
-.cine[data-scene="flow"] .cine-sticky{
-  background:radial-gradient(ellipse 65% 60% at 70% 50%,rgba(251,191,36,.08),transparent 65%),
-    radial-gradient(ellipse 50% 45% at 5% 10%,rgba(10,10,10,.035),transparent 65%),#fff}
-.cine[data-scene="rise"] .cine-sticky{
-  background:radial-gradient(ellipse 55% 50% at 88% 16%,rgba(251,191,36,.16),transparent 65%),
-    radial-gradient(ellipse 50% 45% at 8% 92%,rgba(10,10,10,.04),transparent 65%),#fff}
-.cine-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-
-/* Подписи поверх канваса */
-.cap{position:absolute;z-index:5;max-width:560px;padding:28px 32px;border-radius:20px;
-  background:rgba(255,255,255,.78);border:1px solid var(--border);
-  backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);
-  box-shadow:0 22px 60px rgba(20,20,30,.10);
-  opacity:0;transform:translateY(var(--dy,26px));pointer-events:none;will-change:opacity,transform}
-.cap h3{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,34px);
-  line-height:1.12;letter-spacing:-0.03em;margin-bottom:10px}
-.cap p{color:var(--text-muted);font-size:clamp(14px,1.25vw,17px);line-height:1.6}
-.pos-tl{left:max(24px,5vw);top:14vh}
-.pos-bl{left:max(24px,5vw);bottom:13vh}
-.pos-br{right:max(24px,5vw);bottom:13vh;text-align:right}
-.pos-c{left:50%;top:50%;transform:translate(-50%,calc(-50% + var(--dy,26px)));text-align:center}
-@media(max-width:640px){
-  .cap{left:18px!important;right:18px!important;max-width:none;text-align:left;padding:22px 22px}
-  .pos-tl{top:11vh}.pos-bl,.pos-br{bottom:11vh}
-  .pos-c{top:auto;bottom:11vh;transform:translateY(var(--dy,26px))}
-}
-
-/* ---------- Hero ---------- */
-.hero-overlay{position:absolute;inset:0;z-index:6;display:flex;align-items:center;
-  will-change:opacity,transform}
-.hero-content{max-width:740px;display:flex;flex-direction:column;gap:26px;
-  padding-top:54px;border-left:3px solid var(--text);padding-left:32px;position:relative}
-.hero-content::before{content:'';position:absolute;inset:-56px -90px -56px -44px;z-index:-1;
-  background:radial-gradient(ellipse at 30% 46%,rgba(255,255,255,.94) 0%,rgba(255,255,255,.68) 52%,rgba(255,255,255,0) 80%)}
-@media(max-width:600px){.hero-content{border-left-width:2px;padding-left:18px}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
-  padding:8px 18px;background:rgba(255,255,255,.8);border:1px solid var(--border-strong);
-  border-radius:100px;font-size:13px;color:var(--text-muted);font-weight:600;text-decoration:none;
-  backdrop-filter:blur(8px);transition:border-color .2s,color .2s}
-.hero-eyebrow:hover{border-color:var(--text);color:var(--text)}
-.hero-eyebrow::before{content:'';width:8px;height:8px;background:var(--amber);border-radius:50%;
-  box-shadow:0 0 12px var(--amber-glow);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-.hero-overlay h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,5.4vw,72px);
-  line-height:1.04;letter-spacing:-0.035em}
-.underline{position:relative;display:inline-block}
-.underline::after{content:'';position:absolute;bottom:4px;left:-2px;right:-2px;height:9px;
-  background:var(--amber);opacity:.55;z-index:-1;border-radius:3px;
-  transform:scaleX(0);transform-origin:left;animation:underlineDraw .9s .55s cubic-bezier(.22,1,.36,1) forwards}
-@keyframes underlineDraw{to{transform:scaleX(1)}}
-.hero-sub{font-size:clamp(15px,1.3vw,18px);line-height:1.65;color:var(--text-muted);max-width:560px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.trust-row{display:flex;align-items:center;gap:20px;padding-top:22px;border-top:1px solid var(--border);flex-wrap:wrap}
-.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);font-weight:600}
-.stars{color:var(--amber-2);letter-spacing:1px;font-size:12px}
-.trust-divider{width:1px;height:22px;background:var(--border)}
-@media(max-width:600px){.trust-divider{display:none}.trust-row{gap:12px}}
-.scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
-  width:26px;height:42px;border:2px solid var(--border-strong);border-radius:14px;display:flex;justify-content:center}
-.scroll-hint span{width:4px;height:9px;background:var(--amber-2);border-radius:3px;margin-top:7px;
-  animation:hint 1.8s ease-in-out infinite}
-@keyframes hint{0%,100%{transform:translateY(0);opacity:1}55%{transform:translateY(13px);opacity:.2}}
-
-/* ---------- Секции (общее) ---------- */
-.section{padding:120px 0;position:relative}
-@media(max-width:768px){.section{padding:80px 0}}
-.section-header{margin-bottom:60px;max-width:780px}
-.section-header.center{margin-left:auto;margin-right:auto;text-align:center}
-.section-eyebrow{display:inline-block;font-size:13px;color:var(--text-muted);margin-bottom:18px;
-  font-weight:600;padding-left:24px;position:relative}
-.section-eyebrow::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
-  width:14px;height:2px;background:var(--amber-2)}
-.section-header.center .section-eyebrow{padding-left:0}
-.section-header.center .section-eyebrow::before{position:static;display:inline-block;vertical-align:middle;margin-right:10px}
-.section-title{font-family:var(--display);font-weight:600;font-size:clamp(32px,4.4vw,56px);
-  line-height:1.06;margin-bottom:18px;letter-spacing:-0.035em}
-.section-sub{font-size:17px;color:var(--text-muted);max-width:680px;line-height:1.65}
-.section-header.center .section-sub{margin:0 auto}
-.alt{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-
-/* ---------- Возможности ---------- */
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:960px){.features-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.features-grid{grid-template-columns:1fr}}
-.feature-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:30px 28px;
-  transition:transform .25s,box-shadow .25s,border-color .25s}
-.feature-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(20,20,30,.09);border-color:rgba(255,158,44,.45)}
-.feature-icon{width:46px;height:46px;border-radius:13px;background:rgba(251,191,36,.16);color:#b46509;
-  display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-.feature-icon svg{width:24px;height:24px}
-.feature-card h3{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px}
-.feature-card p{font-size:14.5px;color:var(--text-muted);line-height:1.62}
-
-/* ---------- Почему мы: сравнение ---------- */
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
-@media(max-width:860px){.compare-grid{grid-template-columns:1fr}}
-.compare-card{border-radius:22px;padding:38px 36px;position:relative}
-@media(max-width:600px){.compare-card{padding:28px 24px}}
-.compare-card h3{font-family:var(--display);font-size:21px;font-weight:600;margin-bottom:24px;letter-spacing:-0.02em;
-  display:flex;align-items:center;gap:12px}
-.compare-card ul{list-style:none;display:flex;flex-direction:column;gap:16px}
-.compare-card li{display:flex;gap:13px;font-size:15px;line-height:1.55;align-items:flex-start}
-.compare-card li b{font-weight:700}
-.cmp-ico{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;
-  justify-content:center;font-size:11.5px;font-weight:800;margin-top:1px}
-.compare-card.bad{background:var(--bg-3);border:1px solid var(--border)}
-.compare-card.bad h3{color:var(--text-muted)}
-.compare-card.bad li{color:var(--text-muted)}
-.compare-card.bad .cmp-ico{background:rgba(10,10,10,.07);color:#8a8a8a}
-.compare-card.good{background:#fff;border:2px solid var(--text);box-shadow:0 26px 60px rgba(20,20,30,.10)}
-.compare-card.good .cmp-ico{background:rgba(251,191,36,.22);color:#9a5a00}
-.compare-tag{position:absolute;top:-14px;right:28px;background:linear-gradient(135deg,var(--amber),var(--amber-2));
-  color:#1c1407;font-size:12px;font-weight:800;padding:6px 16px;border-radius:100px}
-.compare-note{margin-top:26px;text-align:center;font-size:14px;color:var(--text-dim)}
-
-/* ---------- Мокап интерфейса ---------- */
-.ui-wrap{position:relative}
-.ui-wrap::before{content:'';position:absolute;inset:8% -4% -6% -4%;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 60% 70% at 50% 60%,rgba(251,191,36,.14) 0%,transparent 65%)}
-.browser{position:relative;z-index:1;max-width:980px;margin:0 auto;background:#fff;border:1px solid var(--border);
-  border-radius:18px;box-shadow:0 40px 100px rgba(20,20,30,.14),0 0 0 1px rgba(10,10,10,.02);overflow:hidden}
-.browser-bar{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);background:var(--bg-2)}
-.browser-dots{display:flex;gap:6px}
-.browser-dots span{width:10px;height:10px;border-radius:50%;background:#e3e3e3}
-.browser-dots span:first-child{background:#ffd2cf}.browser-dots span:nth-child(2){background:#ffe9b8}.browser-dots span:nth-child(3){background:#cdeed2}
-.browser-url{flex:1;max-width:340px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:8px;
-  font-size:12px;color:var(--text-dim);padding:6px 14px;text-align:center;font-weight:600}
-.app-nav{display:flex;align-items:center;gap:6px;padding:12px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.app-logo{width:26px;height:26px;background:var(--dark);border-radius:7px;display:flex;align-items:center;justify-content:center;margin-right:8px}
-.app-tab{font-size:13px;font-weight:700;color:var(--text-muted);padding:7px 13px;border-radius:8px}
-.app-tab.on{background:#ffe7ae;color:var(--text)}
-.app-user{margin-left:auto;font-size:12.5px;color:var(--text-dim);font-weight:600}
-@media(max-width:640px){.app-user{display:none}}
-.app-body{padding:20px}
-.app-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-@media(max-width:640px){.app-stats{grid-template-columns:1fr 1fr}.app-stats .app-stat:last-child{display:none}}
-.app-stat{border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-.app-stat .v{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-0.02em}
-.app-stat .l{font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px}
-.app-table{border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.app-row{display:grid;grid-template-columns:1.2fr 1fr 1fr .7fr;gap:10px;align-items:center;
-  padding:12px 16px;font-size:13.5px;border-bottom:1px solid #f3f3f3}
-.app-row:last-child{border-bottom:none}
-.app-row.head{background:var(--bg-2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--text-dim);font-weight:800}
-.app-row .ph{color:var(--text-muted)}
-@media(max-width:640px){.app-row{grid-template-columns:1.2fr 1fr .8fr}.app-row :nth-child(2){display:none}}
-.badge{display:inline-block;padding:4px 11px;border-radius:20px;font-size:11.5px;font-weight:800;justify-self:start}
-.b-new{background:#f0f9ff;color:#0c63a0;border:1px solid #d4ecfb}
-.b-active{background:#ecfdf5;color:#15803d;border:1px solid #bbf7d0}
-.b-vip{background:#fff7e6;color:#b45309;border:1px solid #ffe0a3}
-.ui-note{text-align:center;margin-top:26px;font-size:14px;color:var(--text-dim)}
-
-/* ---------- Цифры ---------- */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-.stat{padding:30px 26px;border:1px solid var(--border);border-radius:18px;position:relative;overflow:hidden;background:#fff}
-.stat::after{content:'';position:absolute;left:26px;bottom:20px;width:34px;height:3px;border-radius:3px;
-  background:linear-gradient(90deg,var(--amber),var(--amber-2))}
-.stat-value{font-family:var(--display);font-size:clamp(30px,3.2vw,42px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
-.stat-label{font-size:13.5px;color:var(--text-muted);font-weight:500;padding-bottom:18px}
-
-/* ---------- Кому подходит ---------- */
-.niches{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:760px;margin:0 auto}
-.niches span{font-size:14px;font-weight:600;color:var(--text);border:1px solid var(--border-strong);
-  border-radius:100px;padding:10px 20px;transition:border-color .2s,background .2s}
-.niches span:hover{border-color:var(--amber-2);background:rgba(251,191,36,.08)}
-.niches-note{text-align:center;margin-top:24px;font-size:14px;color:var(--text-dim)}
-.niches-note a{color:var(--text);font-weight:700}
-
-/* ---------- Отзывы ---------- */
-.quotes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:900px){.quotes-grid{grid-template-columns:1fr;max-width:560px;margin:0 auto}}
-.quote-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:30px 28px;
-  display:flex;flex-direction:column;gap:16px;transition:transform .25s,box-shadow .25s}
-.quote-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(20,20,30,.09)}
-.quote-card .stars{font-size:14px}
-.quote-card p{font-size:15px;line-height:1.65;color:var(--text)}
-.quote-who{margin-top:auto;display:flex;align-items:center;gap:12px}
-.quote-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--amber-2));
-  color:#1c1407;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.quote-who .n{font-size:14px;font-weight:700}
-.quote-who .d{font-size:12.5px;color:var(--text-dim)}
-
-/* ---------- Тарифы ---------- */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
-@media(max-width:960px){.pricing-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}}
-.price-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:34px 30px;
-  display:flex;flex-direction:column;position:relative;transition:transform .25s,box-shadow .25s}
-.price-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(20,20,30,.09)}
-.price-card.popular{border:2px solid var(--text);box-shadow:0 26px 60px rgba(20,20,30,.12)}
-.badge-popular{position:absolute;top:-14px;left:50%;transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#1c1407;
-  font-size:12px;font-weight:800;padding:6px 16px;border-radius:100px;white-space:nowrap}
-.price-card h3{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:14px}
-.price{display:flex;align-items:baseline;gap:10px;margin-bottom:24px}
-.price-num{font-family:var(--display);font-size:38px;font-weight:700;letter-spacing:-0.03em}
-.price-period{color:var(--text-dim);font-size:14px;font-weight:500}
-.price-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1}
-.price-card li{font-size:14.5px;color:var(--text-muted);padding-left:26px;position:relative}
-.price-card li::before{content:'✓';position:absolute;left:0;top:0;color:var(--amber-2);font-weight:800}
-.price-card li.li-crm{color:var(--text);font-weight:700}
-.price-card li.li-crm::before{content:'★';color:var(--amber-2)}
-
-/* ---------- Как начать ---------- */
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:860px){.steps-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
-.step-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px 28px;position:relative}
-.step-num{font-family:var(--display);font-size:15px;font-weight:700;width:38px;height:38px;border-radius:11px;
-  background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-.step-card h3{font-family:var(--display);font-size:19px;font-weight:600;margin-bottom:6px;letter-spacing:-0.02em}
-.step-card .step-meta{font-size:12.5px;font-weight:700;color:#b46509;margin-bottom:12px}
-.step-card p{font-size:14.5px;color:var(--text-muted);line-height:1.62}
-
-/* ---------- FAQ ---------- */
-.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.faq-item{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .2s}
-.faq-item[open]{border-color:rgba(255,158,44,.5)}
-.faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;
-  padding:22px 26px;font-family:var(--display);font-size:16.5px;font-weight:600;letter-spacing:-0.01em}
-.faq-item summary::-webkit-details-marker{display:none}
-.faq-chev{width:26px;height:26px;border-radius:50%;border:1px solid var(--border-strong);flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;transition:transform .25s,background .25s}
-.faq-item[open] .faq-chev{transform:rotate(45deg);background:#ffe7ae;border-color:transparent}
-.faq-item p{padding:0 26px 24px;font-size:15px;color:var(--text-muted);line-height:1.68;max-width:640px}
-
-/* ---------- Об Ascend Systems ---------- */
-.about-card{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center;
-  background:var(--dark);border-radius:28px;padding:64px 60px;color:#fff;overflow:hidden;position:relative}
-@media(max-width:880px){.about-card{grid-template-columns:1fr;padding:44px 30px;gap:36px}}
-.about-card::before{content:'';position:absolute;top:-160px;right:-120px;width:430px;height:430px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,199,46,.30),transparent 70%);filter:blur(50px);pointer-events:none}
-.about-card .section-eyebrow{color:rgba(255,255,255,.65)}
-.about-card .section-title{color:#fff;font-size:clamp(28px,3.6vw,44px)}
-.about-card p{color:rgba(255,255,255,.74);font-size:16px;line-height:1.7;margin-bottom:24px;max-width:560px}
-.about-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
-.about-chips span{font-size:13px;font-weight:600;color:rgba(255,255,255,.85);
-  border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:7px 15px}
-.about-card .btn{background:var(--amber);color:#1c1407}
-.about-card .btn:hover{background:#ffd25a;box-shadow:0 12px 26px var(--amber-glow)}
-.about-visual{display:flex;align-items:center;justify-content:center}
-.about-mark{width:190px;height:190px;border-radius:46px;background:#101014;
-  border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 0 60px rgba(255,199,46,.06)}
-@media(max-width:880px){.about-visual{display:none}}
-
-/* ---------- Финальный CTA ---------- */
-.final-cta{text-align:center}
-.final-cta .section-title{margin-bottom:16px}
-.final-cta .section-sub{margin:0 auto 36px}
-.final-cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-/* ---------- Footer ---------- */
-.footer{border-top:1px solid var(--border);background:var(--bg-2);padding:64px 0 30px}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:48px}
-@media(max-width:820px){.footer-grid{grid-template-columns:1fr;gap:34px}}
-.footer-brand p{margin-top:18px;font-size:14px;color:var(--text-muted);line-height:1.65;max-width:380px}
-.footer-col h4{font-family:var(--display);font-size:14px;font-weight:600;margin-bottom:16px;letter-spacing:-0.01em}
-.footer-col a{display:block;color:var(--text-muted);text-decoration:none;font-size:14px;line-height:1.5;
-  margin-bottom:13px;transition:color .2s}
-.footer-col a:hover{color:var(--text)}
-.footer-note{font-size:12.5px;color:var(--text-dim);line-height:1.6;margin-top:6px}
-.footer-bottom{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  border-top:1px solid var(--border);padding-top:24px;font-size:13px;color:var(--text-dim)}
-
-/* ---------- Reveal-анимации ---------- */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-.reveal.in{opacity:1;transform:none}
-
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none;transition:none}
-  .underline::after{animation:none;transform:scaleX(1)}
-  .scroll-hint span,.hero-eyebrow::before{animation:none}
-}
-</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3F0Tvkvnc1qkrFUkJb6SqqKkTTf/hf_20260612_082433_454fab1b-e925-4aa5-9047-15323f9db9b2.png">
+<meta name="theme-color" content="#f7f6f3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141312'/%3E%3Cpath d='M14 44h36' stroke='url(%23g)' stroke-width='4' stroke-linecap='round'/%3E%3Ctext x='32' y='36' font-family='Arial' font-size='26' font-weight='700' fill='%23f7f6f3' text-anchor='middle'%3EС%3C/text%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23b9a8ff'/%3E%3Cstop offset='.35' stop-color='%238ec9ff'/%3E%3Cstop offset='.65' stop-color='%239fdcc0'/%3E%3Cstop offset='1' stop-color='%23ffb3a0'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<!-- ======================= HEADER: только вход ======================= -->
+<!-- Three.js ambient background -->
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<!-- ======================= HEADER ======================= -->
 <header class="header" id="header">
-  <div class="container header-inner">
-    <a class="logo" href="#top" aria-label="Ascend CRM — на главную">
-      <span class="logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="60%" height="60%" fill="none">
-          <path d="M6 17l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M6 11l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="logo-text">Ascend&nbsp;CRM</span>
+  <div class="header__inner">
+    <a class="header__brand" href="#top" aria-label="СПЕКТР — на главную">
+      <span class="header__logo">СПЕКТР</span>
+      <span class="header__city">Магнитогорск</span>
     </a>
-    <!-- Адрес личного кабинета: замените login.html на реальный URL входа в CRM -->
-    <a class="btn btn-login" href="login.html">
-      Войти
-      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
-        <path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <nav class="header__nav" aria-label="Основная навигация">
+      <a href="#services">Услуги</a>
+      <a href="#why">Преимущества</a>
+      <a href="#steps">Этапы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header__actions">
+      <a class="header__phone" href="tel:+79507488813">+7&nbsp;950&nbsp;74-888-13</a>
+      <a class="btn btn--small header__cta" href="#contacts">Замер&nbsp;— бесплатно</a>
+    </div>
   </div>
 </header>
 
 <main id="top">
 
-<!-- ======================= HERO · cinematic scroll ======================= -->
-<section class="cine cine-hero" data-scene="hero" data-track="300">
-  <div class="cine-track">
-    <div class="cine-sticky">
-      <canvas class="cine-canvas" aria-hidden="true"></canvas>
-
-      <div class="hero-overlay" data-hero-fade>
-        <div class="container">
-          <div class="hero-content">
-            <a class="hero-eyebrow" href="https://ascendsystems.ru/" target="_blank" rel="noopener">
-              От создателей ascendsystems.ru
-            </a>
-            <h1>CRM, с&nbsp;которой бизнес идёт <span class="underline">вверх</span></h1>
-            <p class="hero-sub">Клиенты, записи, рассылки и&nbsp;отзывы — в&nbsp;одном кабинете.
-              Без&nbsp;лишних кнопок и&nbsp;обучения: открыли — и&nbsp;работаете.</p>
-            <div class="hero-cta">
-              <a class="btn btn-dark btn-large" href="login.html">Войти в кабинет
-                <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-              <a class="btn btn-outline btn-large" href="#why">Почему мы</a>
-            </div>
-            <div class="trust-row">
-              <span class="trust-item"><span class="stars">★★★★★</span> Яндекс</span>
-              <span class="trust-divider"></span>
-              <span class="trust-item"><span class="stars">★★★★★</span> Google</span>
-              <span class="trust-divider"></span>
-              <span class="trust-item"><span class="stars">★★★★★</span> 2ГИС</span>
-              <span class="trust-divider"></span>
-              <span class="trust-item">Сделано в Магнитогорске</span>
-            </div>
-          </div>
-        </div>
-        <div class="scroll-hint" aria-hidden="true"><span></span></div>
+  <!-- ======================= HERO ======================= -->
+  <section class="hero" id="hero">
+    <div class="hero__pin">
+      <div class="hero__media">
+        <video class="hero__video" id="heroVideo"
+               muted playsinline preload="auto"
+               aria-hidden="true">
+          <!-- сначала локальная копия, затем CDN (Higgsfield, 1080p) -->
+          <source src="assets/hero.mp4" type="video/mp4">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3F0Tvkvnc1qkrFUkJb6SqqKkTTf/hf_20260612_082407_4819f428-ea7e-4fbf-923f-d8261f3f389f.mp4" type="video/mp4">
+        </video>
+        <div class="hero__shade"></div>
       </div>
 
-      <div class="cap pos-bl" data-from="0.30" data-to="0.62">
-        <h3>Одна система вместо блокнотов, таблиц и&nbsp;чатов</h3>
-        <p>Всё, что нужно знать о&nbsp;клиенте, — в&nbsp;двух кликах.</p>
-      </div>
-      <div class="cap pos-br" data-from="0.68" data-to="0.97">
-        <h3>Телефон, планшет, компьютер</h3>
-        <p>87%&nbsp;клиентов заходят с&nbsp;телефона. Ваш кабинет — тоже всегда под&nbsp;рукой.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= ВОЗМОЖНОСТИ ======================= -->
-<section class="section alt" id="features">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Что внутри</span>
-      <h2 class="section-title">Только то, что приносит клиентов и&nbsp;экономит время</h2>
-      <p class="section-sub">Никакой учёной степени не&nbsp;нужно. Каждый раздел Ascend&nbsp;CRM решает одну понятную задачу — и&nbsp;решает её&nbsp;хорошо.</p>
-    </div>
-    <div class="features-grid">
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.7"/><path d="M16.4 14.7c2.3.2 3.8 1.5 4.2 3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </div>
-        <h3>База клиентов</h3>
-        <p>Имя, телефон, история визитов, суммы и&nbsp;заметки. Статусы «Новый», «Активный», «VIP» — сразу видно, с&nbsp;кем говорить в&nbsp;первую очередь.</p>
-      </article>
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7.5 13.5h3M7.5 16.8h5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Календарь записей</h3>
-        <p>Неделя с&nbsp;30-минутными слотами: новые, подтверждённые, выполненные. Выручка недели считается сама — прямо над&nbsp;календарём.</p>
-      </article>
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="m4.5 7.5 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Рассылки по сегментам</h3>
-        <p>Все, только VIP или те, кто пропал на&nbsp;30&nbsp;дней. Шаблоны с&nbsp;переменными {имя}, {услуга}, {дата} — пара кликов, и&nbsp;сообщение ушло.</p>
-      </article>
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="m12 3.6 2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.2 6.9 19l1.1-5.6-4.2-3.9 5.7-.7L12 3.6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Сбор 5★ отзывов</h3>
-        <p>Система сама просит отзыв и&nbsp;вежливо напоминает, пока клиент не&nbsp;дойдёт до&nbsp;публикации. Пятёрки — на&nbsp;Яндекс и&nbsp;Google, недовольные — к&nbsp;вам напрямую.</p>
-      </article>
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3.8 10.6c-.8.3-.75 1.45.07 1.7l4.63 1.4 1.5 4.7c.25.8 1.35.85 1.7.1L21 4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.5 13.7 12-9.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Уведомления в Telegram</h3>
-        <p>Заявки и&nbsp;запросы отзывов летят прямо в&nbsp;ваш чат. Видите всё важное, даже не&nbsp;открывая кабинет.</p>
-      </article>
-      <article class="feature-card reveal">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 5 6.2v5.1c0 4.3 3 7.5 7 9.2 4-1.7 7-4.9 7-9.2V6.2L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9.2 12 2 2 3.6-3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Роли и кабинеты</h3>
-        <p>Администратор управляет партнёрами и&nbsp;видит статистику по&nbsp;каждому. У&nbsp;партнёра — свой кабинет и&nbsp;своя база. Никто никому не&nbsp;мешает.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= CINEMATIC · поток ======================= -->
-<section class="cine" data-scene="flow" data-track="280">
-  <div class="cine-track">
-    <div class="cine-sticky">
-      <canvas class="cine-canvas" aria-hidden="true"></canvas>
-      <div class="cap pos-tl" data-from="0.04" data-to="0.34">
-        <h3>Каждый звонок, заявка и&nbsp;визит — в&nbsp;одной базе</h3>
-        <p>Ничего не&nbsp;теряется: статусы, суммы и&nbsp;заметки хранятся по&nbsp;каждому клиенту.</p>
-      </div>
-      <div class="cap pos-br" data-from="0.38" data-to="0.66">
-        <h3>Сегменты вместо хаоса</h3>
-        <p>Новые, активные, VIP и&nbsp;«пропавшие» — рассылка нужным людям в&nbsp;пару кликов.</p>
-      </div>
-      <div class="cap pos-c" data-from="0.72" data-to="0.97">
-        <h3>Порядок — это деньги</h3>
-        <p>Меньше рутины — больше повторных визитов.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= ПОЧЕМУ МЫ: СРАВНЕНИЕ ======================= -->
-<section class="section" id="why">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Почему мы</span>
-      <h2 class="section-title">Мы посмотрели на&nbsp;популярные CRM. И&nbsp;сделали наоборот.</h2>
-      <p class="section-sub">Большинство CRM в&nbsp;России созданы для больших отделов продаж: десятки модулей,
-        интеграторы, недели внедрения. Мастеру и&nbsp;владельцу сервиса нужно другое — открыть и&nbsp;работать.</p>
-    </div>
-    <div class="compare-grid">
-      <div class="compare-card bad reveal">
-        <h3>Обычные CRM</h3>
-        <ul>
-          <li><span class="cmp-ico">✕</span>Десятки модулей и&nbsp;настроек — а&nbsp;нужны три</li>
-          <li><span class="cmp-ico">✕</span>Интерфейс из&nbsp;2010-х: вкладки, мелкие таблицы, непонятные иконки</li>
-          <li><span class="cmp-ico">✕</span>Без интегратора не&nbsp;настроить — это отдельный бюджет</li>
-          <li><span class="cmp-ico">✕</span>Сотрудников отправляют «на&nbsp;обучение» с&nbsp;видеокурсами</li>
-          <li><span class="cmp-ico">✕</span>Доплаты за&nbsp;модули, пользователей и&nbsp;поддержку</li>
-          <li><span class="cmp-ico">✕</span>Поддержка — тикеты и&nbsp;«ожидайте ответа оператора»</li>
-        </ul>
-      </div>
-      <div class="compare-card good reveal">
-        <div class="compare-tag">Наш подход</div>
-        <h3>
-          <span class="logo-mark" style="width:30px;height:30px;border-radius:8px">
-            <svg viewBox="0 0 24 24" width="60%" height="60%" fill="none"><path d="M6 17l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          Ascend CRM
-        </h3>
-        <ul>
-          <li><span class="cmp-ico">✓</span><span><b>Четыре раздела:</b> клиенты, записи, рассылки, отзывы. Всё.</span></li>
-          <li><span class="cmp-ico">✓</span><span><b>Понятен с первого экрана</b> — как мессенджер, а&nbsp;не&nbsp;бухгалтерия</span></li>
-          <li><span class="cmp-ico">✓</span><span><b>Настраиваем под ключ</b> — за&nbsp;один день, базу перенесём сами</span></li>
-          <li><span class="cmp-ico">✓</span><span><b>Сотрудник работает через 5&nbsp;минут</b> — без курсов и&nbsp;инструкций</span></li>
-          <li><span class="cmp-ico">✓</span><span><b>Всё включено в подписку</b> — без доплат и&nbsp;сюрпризов</span></li>
-          <li><span class="cmp-ico">✓</span><span><b>Поддержка — живые люди в&nbsp;Telegram,</b> отвечаем быстро</span></li>
-        </ul>
-      </div>
-    </div>
-    <p class="compare-note">Честно: если вам нужны воронки на&nbsp;200 этапов и&nbsp;отчёты для совета директоров — мы не&nbsp;подойдём. И&nbsp;это нормально.</p>
-  </div>
-</section>
-
-<!-- ======================= ИНТЕРФЕЙС ======================= -->
-<section class="section alt">
-  <div class="container">
-    <div class="section-header center">
-      <span class="section-eyebrow">Интерфейс</span>
-      <h2 class="section-title">Выглядит так&nbsp;же просто, как работает</h2>
-      <p class="section-sub">Никаких запутанных меню и&nbsp;ста кнопок. Вот так выглядит кабинет партнёра — целиком.</p>
-    </div>
-    <div class="ui-wrap reveal">
-      <div class="browser" role="img" aria-label="Интерфейс кабинета Ascend CRM: разделы, статистика недели и база клиентов">
-        <div class="browser-bar">
-          <div class="browser-dots"><span></span><span></span><span></span></div>
-          <div class="browser-url">crm.ascendsystems.ru</div>
-        </div>
-        <div class="app-nav">
-          <span class="app-logo"><svg viewBox="0 0 24 24" width="60%" height="60%" fill="none"><path d="M6 17l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="app-tab on">База клиентов</span>
-          <span class="app-tab">Бронирование</span>
-          <span class="app-tab">Рассылка</span>
-          <span class="app-tab">Отзывы</span>
-          <span class="app-user">Сергей · Автосервис</span>
-        </div>
-        <div class="app-body">
-          <div class="app-stats">
-            <div class="app-stat"><div class="v">27</div><div class="l">записей на неделе</div></div>
-            <div class="app-stat"><div class="v">84 500 ₽</div><div class="l">выручка недели</div></div>
-            <div class="app-stat"><div class="v">9</div><div class="l">новых клиентов</div></div>
-          </div>
-          <div class="app-table">
-            <div class="app-row head"><span>Имя</span><span>Телефон</span><span>Услуга</span><span>Статус</span></div>
-            <div class="app-row"><span>Иван Петров</span><span class="ph">+7 912 000-14-52</span><span>Замена масла</span><span class="badge b-active">Активный</span></div>
-            <div class="app-row"><span>Марина Соколова</span><span class="ph">+7 903 411-78-20</span><span>Полировка кузова</span><span class="badge b-vip">VIP</span></div>
-            <div class="app-row"><span>Андрей Ким</span><span class="ph">+7 919 330-05-87</span><span>Шиномонтаж</span><span class="badge b-new">Новый</span></div>
-            <div class="app-row"><span>Олег Власов</span><span class="ph">+7 982 654-90-31</span><span>Диагностика ходовой</span><span class="badge b-active">Активный</span></div>
-          </div>
+      <!-- beat A -->
+      <div class="hero__stage hero__stage--a">
+        <p class="hero__kicker"><span>ООО «СПЕКТР»</span><i></i><span>Магнитогорск</span></p>
+        <h1 class="hero__title" id="heroTitle">СПЕКТР</h1>
+        <p class="hero__sub">Окна. Балконы. Ремонт под&nbsp;ключ.</p>
+        <div class="hero__cta">
+          <a class="btn btn--light" href="tel:+79507488813">Бесплатный замер</a>
+          <a class="btn btn--ghost btn--ghost-light" href="https://vk.ru/ooospectr" target="_blank" rel="noopener">Мы&nbsp;ВКонтакте</a>
         </div>
       </div>
-      <p class="ui-note">Реальные разделы кабинета. Ничего лишнего — и&nbsp;поэтому всё работает.</p>
-    </div>
-  </div>
-</section>
 
-<!-- ======================= ЦИФРЫ ======================= -->
-<section class="section">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat reveal"><div class="stat-value">1&nbsp;день</div><div class="stat-label">настройка под ключ вместе с&nbsp;переносом базы</div></div>
-      <div class="stat reveal"><div class="stat-value">5&nbsp;минут</div><div class="stat-label">и сотрудник уже работает в&nbsp;системе</div></div>
-      <div class="stat reveal"><div class="stat-value">4.9★</div><div class="stat-label">средний рейтинг клиентов Ascend</div></div>
-      <div class="stat reveal"><div class="stat-value">0&nbsp;₽</div><div class="stat-label">за обучение, поддержку и&nbsp;обновления</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= КОМУ ПОДХОДИТ ======================= -->
-<section class="section alt">
-  <div class="container">
-    <div class="section-header center">
-      <span class="section-eyebrow">Кому подходит</span>
-      <h2 class="section-title">Создана для тех, кто живёт записями</h2>
-      <p class="section-sub">Локальный бизнес с&nbsp;хорошим средним чеком, который растёт за&nbsp;счёт повторных визитов и&nbsp;сарафана.</p>
-    </div>
-    <div class="niches reveal">
-      <span>Автосервисы</span><span>Детейлинг-центры</span><span>Салоны красоты</span><span>Барбершопы</span>
-      <span>Сантехники</span><span>Электрики</span><span>Ремонт квартир</span><span>Окна и остекление</span>
-      <span>Мастерские</span><span>Студии и школы</span>
-    </div>
-    <p class="niches-note">Не нашли себя в списке? <a href="tel:+79339828807">Позвоните</a> — разберёмся за&nbsp;15&nbsp;минут.</p>
-  </div>
-</section>
-
-<!-- ======================= CINEMATIC · восхождение ======================= -->
-<section class="cine" data-scene="rise" data-track="280">
-  <div class="cine-track">
-    <div class="cine-sticky">
-      <canvas class="cine-canvas" aria-hidden="true"></canvas>
-      <div class="cap pos-tl" data-from="0.04" data-to="0.34">
-        <h3>Выручка недели — перед глазами</h3>
-        <p>Календарь сам считает подтверждённые и&nbsp;выполненные записи.</p>
+      <!-- beat B -->
+      <div class="hero__stage hero__stage--b" aria-hidden="true">
+        <p class="hero__quote">Делаем на&nbsp;совесть&nbsp;— <em>как для себя</em></p>
+        <p class="hero__quote-sub">На рынке с 2018 года · Гарантия на все работы</p>
       </div>
-      <div class="cap pos-br" data-from="0.38" data-to="0.66">
-        <h3>Рейтинг растёт на автопилоте</h3>
-        <p>Запросы отзывов уходят сами — пятёрки копятся, позиции в&nbsp;картах растут.</p>
-      </div>
-      <div class="cap pos-c" data-from="0.72" data-to="0.97">
-        <h3>Ascend — значит «восхождение»</h3>
-        <p>Начните своё — вместе с&nbsp;Ascend&nbsp;Systems.</p>
+
+      <div class="hero__hint" aria-hidden="true">
+        <span>Листайте</span>
+        <i class="spectral-line"></i>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ======================= ОТЗЫВЫ ======================= -->
-<section class="section">
-  <div class="container">
-    <div class="section-header center">
-      <span class="section-eyebrow">Отзывы</span>
-      <h2 class="section-title">Что говорят первые клиенты</h2>
-    </div>
-    <div class="quotes-grid">
-      <article class="quote-card reveal">
-        <span class="stars" aria-hidden="true">★★★★★</span>
-        <p>«Раньше записи жили в&nbsp;тетради и&nbsp;трёх чатах. Теперь утром открываю календарь — и&nbsp;весь день перед глазами. Жена больше не&nbsp;звонит спрашивать, во&nbsp;сколько у&nbsp;меня клиент.»</p>
-        <div class="quote-who">
-          <span class="quote-ava">С</span>
-          <span><span class="n">Сергей</span><br><span class="d">автосервис · Магнитогорск</span></span>
-        </div>
-      </article>
-      <article class="quote-card reveal">
-        <span class="stars" aria-hidden="true">★★★★★</span>
-        <p>«Отправили рассылку тем, кто не&nbsp;был больше месяца, — 14&nbsp;записей за&nbsp;вечер. Я&nbsp;даже не&nbsp;поверил сначала. Теперь делаем так каждый месяц.»</p>
-        <div class="quote-who">
-          <span class="quote-ava">А</span>
-          <span><span class="n">Алина</span><br><span class="d">студия детейлинга</span></span>
-        </div>
-      </article>
-      <article class="quote-card reveal">
-        <span class="stars" aria-hidden="true">★★★★★</span>
-        <p>«Главное — администратору ничего не&nbsp;пришлось объяснять. Открыла, увидела четыре вкладки и&nbsp;сразу начала работать. С&nbsp;прошлой CRM мы мучились две недели.»</p>
-        <div class="quote-who">
-          <span class="quote-ava">Н</span>
-          <span><span class="n">Наталья</span><br><span class="d">салон красоты</span></span>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= ТАРИФЫ ======================= -->
-<section class="section alt" id="pricing">
-  <div class="container">
-    <div class="section-header center">
-      <span class="section-eyebrow">Тарифы</span>
-      <h2 class="section-title">Ascend CRM входит в&nbsp;подписку Ascend&nbsp;Systems</h2>
-      <p class="section-sub">CRM не&nbsp;продаётся отдельно — она часть системы: сайт, маркетинг и&nbsp;кабинет в&nbsp;одной подписке.
-        Никаких длинных контрактов: остановить можно в&nbsp;любой момент.</p>
-    </div>
-    <div class="pricing-grid">
-      <article class="price-card reveal">
-        <h3>Базовый</h3>
-        <div class="price"><span class="price-num">9&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
-        <ul>
-          <li>Премиум-сайт с адаптивом</li>
-          <li>Хостинг и домен включены</li>
-          <li>Карточки Яндекс и 2ГИС</li>
-          <li>Локальное SEO</li>
-          <li>Бесплатные правки контента</li>
-        </ul>
-        <a class="btn btn-outline btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать базовый</a>
-      </article>
-      <article class="price-card popular reveal">
-        <div class="badge-popular">Популярный выбор</div>
-        <h3>Стандарт</h3>
-        <div class="price"><span class="price-num">14&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
-        <ul>
-          <li>Всё из тарифа «Базовый»</li>
-          <li class="li-crm">Кабинет Ascend CRM</li>
-          <li>Система сбора 5★ отзывов</li>
-          <li>Ответный текст на пропущенный звонок</li>
-          <li>Заявки в Telegram мгновенно</li>
-          <li>Ежемесячный отчёт о результатах</li>
-        </ul>
-        <a class="btn btn-dark btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать стандарт</a>
-      </article>
-      <article class="price-card reveal">
-        <h3>Pro</h3>
-        <div class="price"><span class="price-num">19&nbsp;700&nbsp;₽</span><span class="price-period">в месяц</span></div>
-        <ul>
-          <li>Всё из тарифа «Стандарт»</li>
-          <li class="li-crm">Кабинет Ascend CRM</li>
-          <li>Реклама в Яндекс.Директ (настройка)</li>
-          <li>Расширенное SEO и контент</li>
-          <li>Многостраничный сайт</li>
-          <li>Приоритетная поддержка</li>
-        </ul>
-        <a class="btn btn-outline btn-block" href="https://ascendsystems.ru/" target="_blank" rel="noopener">Выбрать Pro</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= КАК НАЧАТЬ ======================= -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Как начать</span>
-      <h2 class="section-title">Три шага — и&nbsp;в&nbsp;клиентах порядок</h2>
-    </div>
-    <div class="steps-grid">
-      <article class="step-card reveal">
-        <div class="step-num">1</div>
-        <h3>Звонок</h3>
-        <div class="step-meta">15–20 минут</div>
-        <p>Расскажете про свой бизнес. Мы покажем кабинет, ответим на&nbsp;вопросы и&nbsp;честно скажем, подойдём&nbsp;ли друг другу.</p>
-      </article>
-      <article class="step-card reveal">
-        <div class="step-num">2</div>
-        <h3>Настройка под ключ</h3>
-        <div class="step-meta">1 день</div>
-        <p>Перенесём базу из&nbsp;Excel или старой CRM, настроим календарь, шаблоны рассылок и&nbsp;сбор отзывов. От&nbsp;вас — короткая анкета.</p>
-      </article>
-      <article class="step-card reveal">
-        <div class="step-num">3</div>
-        <h3>Работаете</h3>
-        <div class="step-meta">Мы на связи в Telegram</div>
-        <p>Вы ведёте клиентов и&nbsp;записи, система забирает рутину. Вопросы решаем в&nbsp;чате — без тикетов и&nbsp;ожиданий.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= FAQ ======================= -->
-<section class="section alt">
-  <div class="container">
-    <div class="section-header center">
-      <span class="section-eyebrow">Вопросы и ответы</span>
-      <h2 class="section-title">Что обычно спрашивают</h2>
-    </div>
-    <div class="faq-list">
-      <details class="faq-item reveal">
-        <summary>Сложно ли переехать с Excel или другой CRM?<span class="faq-chev">+</span></summary>
-        <p>Нет. Пришлите таблицу или выгрузку — базу перенесём за&nbsp;вас при подключении. Обычно это занимает один день, от&nbsp;вас ничего не&nbsp;требуется.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary>Нужно ли обучать сотрудников?<span class="faq-chev">+</span></summary>
-        <p>Нет. В&nbsp;кабинете четыре раздела, всё подписано по-русски. Администратор начинает работать через пять минут. Если что-то непонятно — пишите в&nbsp;Telegram, поможем сразу.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary>Работает на телефоне?<span class="faq-chev">+</span></summary>
-        <p>Да. Кабинет адаптирован под телефон, планшет и&nbsp;компьютер. Большинство партнёров ведут записи прямо с&nbsp;телефона между клиентами.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary>Что с безопасностью данных?<span class="faq-chev">+</span></summary>
-        <p>База живёт в&nbsp;защищённом облаке, доступ — только по&nbsp;логину и&nbsp;паролю. У&nbsp;каждого партнёра изолированный кабинет: ваши клиенты видны только вам.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary>Можно подключить только CRM, без сайта?<span class="faq-chev">+</span></summary>
-        <p>Сейчас CRM идёт в&nbsp;связке с&nbsp;сайтом и&nbsp;маркетинговой системой — в&nbsp;тарифах «Стандарт» и&nbsp;«Pro». Так система приносит максимум: сайт приводит клиентов, CRM превращает их в&nbsp;постоянных.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= ОБ ASCEND SYSTEMS ======================= -->
-<section class="section">
-  <div class="container">
-    <div class="about-card reveal">
-      <div class="about-text">
-        <span class="section-eyebrow">Кто мы</span>
-        <h2 class="section-title">Ascend CRM — продукт Ascend&nbsp;Systems</h2>
-        <p>Мы — команда из&nbsp;Магнитогорска. Делаем сайты и&nbsp;маркетинговые системы, которые приводят клиентов локальному бизнесу:
-          автосервисам, детейлингу, мастерам и&nbsp;студиям. Ascend&nbsp;CRM — сердце этой системы:
-          здесь живут ваши клиенты, записи и&nbsp;отзывы.</p>
-        <div class="about-chips">
-          <span>Сайты под ключ</span><span>Локальное SEO</span><span>Сбор отзывов</span><span>Ответ на пропущенный звонок</span>
-        </div>
-        <a class="btn" href="https://ascendsystems.ru/" target="_blank" rel="noopener">ascendsystems.ru
-          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+  <!-- ======================= ABOUT ======================= -->
+  <section class="section about" id="about">
+    <div class="container">
+      <p class="label reveal">О компании</p>
+      <h2 class="display split">Один подрядчик&nbsp;— весь объект</h2>
+      <div class="about__row">
+        <p class="about__text reveal">«Спектр» выполняет работы комплексно: от&nbsp;замера и&nbsp;подбора материалов до&nbsp;монтажа, отделки и&nbsp;финальной приёмки. Вам не&nbsp;нужно отдельно искать оконщиков, отделочников, электрика и&nbsp;сантехника&nbsp;— мы&nbsp;берём объект целиком и&nbsp;отвечаем за&nbsp;результат.</p>
+        <p class="about__text about__text--muted reveal">Это удобно, экономит время и&nbsp;помогает избежать лишних расходов. Работаем аккуратно, ответственно и&nbsp;с&nbsp;учётом пожеланий клиента.</p>
       </div>
-      <div class="about-visual" aria-hidden="true">
-        <div class="about-mark">
-          <svg viewBox="0 0 24 24" width="56%" height="56%" fill="none">
-            <path d="M6 17l6-6 6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 11l6-6 6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+      <div class="stats">
+        <div class="stat reveal">
+          <p class="stat__num"><span class="count" data-to="2018" data-from="1990">1990</span></p>
+          <p class="stat__cap">год основания — на рынке Магнитогорска</p>
+        </div>
+        <div class="stat reveal">
+          <p class="stat__num"><span class="count" data-to="1000" data-from="0">0</span>+</p>
+          <p class="stat__cap">довольных клиентов</p>
+        </div>
+        <div class="stat reveal">
+          <p class="stat__num"><span class="count" data-to="12" data-from="0">0</span>&nbsp;мес</p>
+          <p class="stat__cap">бесплатного обслуживания после установки</p>
+        </div>
+        <div class="stat reveal">
+          <p class="stat__num">0&nbsp;₽</p>
+          <p class="stat__cap">замер и консультация</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ======================= ФИНАЛЬНЫЙ CTA ======================= -->
-<section class="section final-cta">
-  <div class="container">
-    <h2 class="section-title reveal">Хватит терять клиентов.<br>Начните привлекать.</h2>
-    <p class="section-sub reveal">Уже работаете с&nbsp;Ascend&nbsp;Systems — входите в&nbsp;кабинет.
-      Ещё нет — позвоните, покажем демо без&nbsp;обязательств.</p>
-    <div class="final-cta-buttons reveal">
-      <a class="btn btn-dark btn-large" href="login.html">Войти в кабинет
-        <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a class="btn btn-outline btn-large" href="tel:+79339828807">Позвонить: +7 (933) 982-88-07</a>
+  <!-- ======================= SERVICES ======================= -->
+  <section class="section services" id="services">
+    <div class="container">
+      <p class="label reveal">Услуги</p>
+      <h2 class="display split">Три направления&nbsp;— один уровень качества</h2>
+
+      <div class="service reveal-row">
+        <div class="service__head">
+          <span class="service__num">01</span>
+          <h3 class="service__title">Балконы и&nbsp;лоджии</h3>
+        </div>
+        <div class="service__body">
+          <p class="service__desc">Остекление, утепление и&nbsp;отделка&nbsp;— балкон становится полноценной частью квартиры.</p>
+          <ul class="service__tags">
+            <li>Установка и остекление</li>
+            <li>Ремонт балконов</li>
+            <li>Наружная и внутренняя обшивка</li>
+            <li>Утепление</li>
+            <li>Отделка ПВХ-панелями и вагонкой</li>
+            <li>Шкафы, пеналы, антресоли</li>
+            <li>Замена козырьков</li>
+            <li>Освещение и тёплые полы</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service reveal-row">
+        <div class="service__head">
+          <span class="service__num">02</span>
+          <h3 class="service__title">Окна</h3>
+        </div>
+        <div class="service__body">
+          <p class="service__desc">Установка и&nbsp;обслуживание окон ПВХ: тихо, тепло и&nbsp;без сквозняков.</p>
+          <ul class="service__tags">
+            <li>Установка окон ПВХ</li>
+            <li>Ремонт и регулировка</li>
+            <li>Замена стеклопакетов</li>
+            <li>Ручки, уплотнители, фурнитура</li>
+            <li>Москитные сетки</li>
+            <li>Утепление швов</li>
+            <li>Подоконники, отливы, откосы</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service reveal-row">
+        <div class="service__head">
+          <span class="service__num">03</span>
+          <h3 class="service__title">Ремонт под&nbsp;ключ</h3>
+        </div>
+        <div class="service__body">
+          <p class="service__desc">Комплексный ремонт по&nbsp;вашему дизайн-проекту&nbsp;— от&nbsp;демонтажа до&nbsp;финишной отделки.</p>
+          <ul class="service__tags">
+            <li>Ванная и туалет под ключ</li>
+            <li>Сантехнические работы</li>
+            <li>Электрика любой сложности</li>
+            <li>Плитка и керамогранит</li>
+            <li>Заливка полов</li>
+            <li>Тёплые полы</li>
+            <li>Ламинат, кварцвинил, линолеум</li>
+            <li>Штукатурка и покраска</li>
+            <li>Поклейка обоев</li>
+            <li>Демонтаж</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ======================= WHY ======================= -->
+  <section class="section why" id="why">
+    <div class="container">
+      <p class="label reveal">Почему «Спектр»</p>
+      <h2 class="display split">Цены, которые говорят сами за&nbsp;себя</h2>
+      <div class="why__grid">
+        <article class="card reveal">
+          <h3 class="card__title">Комплексный подход</h3>
+          <p class="card__text">Одна команда и&nbsp;один договор на&nbsp;все виды работ. Быстрее и&nbsp;выгоднее, чем искать мастеров по&nbsp;отдельности.</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">Честные цены</h3>
+          <p class="card__text">Никаких накруток, скрытых платежей и&nbsp;«сюрпризов» в&nbsp;процессе. Смета фиксируется до&nbsp;начала работ.</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">Гарантия на&nbsp;все работы</h3>
+          <p class="card__text">Отвечаем за&nbsp;результат и&nbsp;после сдачи объекта. Делаем так, чтобы окна не&nbsp;дули, а&nbsp;ремонт служил годами.</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">Год обслуживания&nbsp;— бесплатно</h3>
+          <p class="card__text">После установки бесплатно обслуживаем конструкции в&nbsp;течение 12&nbsp;месяцев.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= STEPS ======================= -->
+  <section class="section steps" id="steps">
+    <div class="container">
+      <p class="label reveal">Как мы работаем</p>
+      <h2 class="display split">Четыре шага до&nbsp;результата</h2>
+      <div class="steps__track" id="stepsTrack">
+        <i class="steps__line" aria-hidden="true"><b id="stepsProgress"></b></i>
+        <ol class="steps__list">
+          <li class="step reveal">
+            <span class="step__num">01</span>
+            <h3 class="step__title">Заявка</h3>
+            <p class="step__text">Позвоните или напишите в&nbsp;сообщения группы&nbsp;— обсудим задачу и&nbsp;подскажем решение.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num">02</span>
+            <h3 class="step__title">Замер</h3>
+            <p class="step__text">Приедем, всё замерим и&nbsp;зафиксируем смету. Бесплатно.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num">03</span>
+            <h3 class="step__title">Работы</h3>
+            <p class="step__text">Материалы, монтаж, отделка&nbsp;— аккуратно, в&nbsp;срок и&nbsp;без лишней пыли.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__num">04</span>
+            <h3 class="step__title">Сдача</h3>
+            <p class="step__text">Принимаете работу. Дальше&nbsp;— год бесплатного обслуживания.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CTA / CONTACTS ======================= -->
+  <section class="section contacts" id="contacts">
+    <div class="container">
+      <div class="cta reveal">
+        <i class="cta__glow" aria-hidden="true"></i>
+        <p class="label label--invert">Бесплатный замер и консультация</p>
+        <h2 class="cta__title">Рассчитаем стоимость по&nbsp;фото</h2>
+        <p class="cta__text">Отправьте фото объекта и&nbsp;коротко опишите задачу&nbsp;— назовём точную цену быстрее. Без&nbsp;скрытых платежей: всё честно и&nbsp;прозрачно.</p>
+        <a class="cta__phone" href="tel:+79507488813">+7&nbsp;950&nbsp;74-888-13</a>
+        <div class="cta__actions">
+          <a class="btn btn--light" href="tel:+79507488813">Позвонить</a>
+          <a class="btn btn--ghost btn--ghost-light" href="https://vk.ru/ooospectr" target="_blank" rel="noopener">Написать ВКонтакте</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
 
 <!-- ======================= FOOTER ======================= -->
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="logo" href="#top">
-          <span class="logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="60%" height="60%" fill="none">
-              <path d="M6 17l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6 11l6-6 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="logo-text">Ascend&nbsp;CRM</span>
-        </a>
-        <p>Система управления клиентами для локального бизнеса. Часть экосистемы Ascend&nbsp;Systems — сайты и&nbsp;маркетинговые системы, которые приводят клиентов.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Контакты</h4>
-        <a href="tel:+79339828807">Давид · Founder<br>+7 (933) 982-88-07</a>
-        <a href="tel:+79030900798">Данил · Co-founder<br>+7 (903) 090-07-98</a>
-      </div>
-      <div class="footer-col">
-        <h4>Компания</h4>
-        <a href="https://ascendsystems.ru/" target="_blank" rel="noopener">ascendsystems.ru</a>
-        <a href="#pricing">Тарифы</a>
-        <a href="login.html">Войти в кабинет</a>
-        <p class="footer-note">Магнитогорск · работаем удалённо со&nbsp;всей Россией<br>Пн—Пт · 10:00—20:00</p>
-      </div>
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="footer__logo">СПЕКТР</span>
+      <p class="footer__tag">Окна · Балконы · Ремонт под ключ</p>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Ascend Systems</span>
-      <span>Сделано в Магнитогорске</span>
+    <div class="footer__col">
+      <p class="footer__cap">Контакты</p>
+      <a href="tel:+79507488813">+7 950 74-888-13</a>
+      <a href="https://vk.ru/ooospectr" target="_blank" rel="noopener">vk.ru/ooospectr</a>
     </div>
+    <div class="footer__col">
+      <p class="footer__cap">Адрес</p>
+      <p>Россия, г. Магнитогорск</p>
+      <p>Работаем по городу и пригороду</p>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© 2018–<span id="year">2026</span> ООО «СПЕКТР»</p>
+    <i class="spectral-line spectral-line--footer"></i>
   </div>
 </footer>
 
-<script>
-/* ============================================================
-   Scroll-cinematic движок: янтарная лента рисуется на канвасе
-   живым кодом (без файлов кадров) — скролл листает анимацию,
-   подписи появляются по прогрессу. Файл полностью автономен.
-   ============================================================ */
-(function () {
-  "use strict";
-
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- Header: фон при скролле ---------- */
-  var header = document.getElementById("header");
-  function onScrollHeader() {
-    header.classList.toggle("scrolled", window.scrollY > 24);
-  }
-  window.addEventListener("scroll", onScrollHeader, { passive: true });
-  onScrollHeader();
-
-  /* ---------- Reveal-анимации ---------- */
-  var revealEls = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && !reducedMotion) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add("in");
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.18 });
-    revealEls.forEach(function (el, i) {
-      el.style.transitionDelay = (i % 3) * 70 + "ms";
-      io.observe(el);
-    });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add("in"); });
-  }
-
-  /* ---------- Утилиты ---------- */
-  var TAU = Math.PI * 2;
-  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
-  function smooth(x) { x = clamp01(x); return x * x * (3 - 2 * x); }
-  function easeInOut(x) { return x * x * (3 - 2 * x); }
-  function sstep(e0, e1, x) { return smooth((x - e0) / (e1 - e0)); }
-
-  function mulberry32(seed) {
-    return function () {
-      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
-      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-
-  /* ---------- Лента: фирменная палитра и геометрия нитей ---------- */
-  // Золото → янтарь → апельсин → глубокий оранж → роза
-  var PALETTE = [[255, 210, 90], [255, 199, 46], [255, 158, 44], [255, 122, 26], [253, 164, 175]];
-
-  function paletteColor(u, lighten, alpha) {
-    var n = PALETTE.length;
-    var x = ((u % 1) + 1) % 1 * n;
-    var i = Math.floor(x) % n;
-    var f = x - Math.floor(x);
-    f = f * f * (3 - 2 * f);
-    var a = PALETTE[i], b = PALETTE[(i + 1) % n];
-    var r = a[0] + (b[0] - a[0]) * f + 0;
-    var g = a[1] + (b[1] - a[1]) * f;
-    var bl = a[2] + (b[2] - a[2]) * f;
-    r += (255 - r) * lighten; g += (255 - g) * lighten; bl += (255 - bl) * lighten;
-    return "rgba(" + (r | 0) + "," + (g | 0) + "," + (bl | 0) + "," + alpha.toFixed(3) + ")";
-  }
-
-  // y нити в точке s (0..1 вдоль кадра); struct — прогресс скролла,
-  // phase — «время» волн (растёт и от скролла, и от часов — лента всегда живая)
-  function threadY(scene, s, lane, ph, speed, struct, phase) {
-    var spine, width, twist, off, wave;
-    if (scene === "hero") {
-      spine = 0.86 - 0.62 * easeInOut(s) + 0.05 * Math.sin(s * 2.4 + 0.6);
-      width = 0.105 * (0.62 + 0.38 * Math.sin(Math.PI * Math.min(1, s * 1.06)));
-      twist = Math.cos(s * 5.2 + ph * 0.22 + phase * TAU);
-      off = lane * width * twist;
-      wave = 0.020 * Math.sin(s * 9 + ph + phase * TAU * 2 * speed)
-           + 0.011 * Math.sin(s * 17 - ph * 1.4 + phase * TAU * 3);
-      return spine + off + wave * (0.45 + 0.55 * Math.abs(lane));
-    }
-    if (scene === "flow") {
-      var startY = 0.52 + Math.sin(ph * 3.1) * 0.34;         // стартовый разброс
-      var conv = sstep(0.18, 0.62 + 0.04 * Math.sin(phase * TAU), s);
-      spine = 0.52 - 0.10 * easeInOut(s);
-      var base = startY + (spine - startY) * conv;
-      width = 0.085 * (0.55 + 0.45 * Math.sin(Math.PI * s));
-      twist = Math.cos(s * 6 + ph * 0.3 + phase * TAU);
-      off = lane * width * (0.35 + 0.65 * conv) * twist;
-      var calm = 1 - 0.72 * conv;                            // после слияния — покой
-      wave = (0.034 * Math.sin(s * 7.5 + ph + phase * TAU * 2.2 * speed)
-            + 0.016 * Math.sin(s * 15 - ph + phase * TAU * 3.4)) * calm;
-      return base + off + wave;
-    }
-    // rise: к финалу скролла хвост поднимается выше
-    var lift = 0.10 * easeInOut(clamp01(struct));
-    spine = 0.84 - (0.58 + lift) * Math.pow(easeInOut(clamp01((s - 0.06) / 0.86)), 1.15);
-    width = 0.095 * (0.70 + 0.30 * Math.sin(Math.PI * s)) * (1 - 0.35 * s);
-    twist = Math.cos(s * 4.6 + ph * 0.25 + phase * TAU * 0.9);
-    off = lane * width * twist;
-    wave = 0.018 * Math.sin(s * 8 + ph + phase * TAU * 1.8 * speed)
-         + 0.009 * Math.sin(s * 16 - ph * 1.2 + phase * TAU * 2.6);
-    return spine + off + wave * (0.5 + 0.5 * Math.abs(lane));
-  }
-
-  var SCENE_CFG = { hero: { n: 86, seed: 11 }, flow: { n: 92, seed: 23 }, rise: { n: 80, seed: 37 } };
-
-  function Ribbon(scene, canvas) {
-    this.scene = scene;
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
-    this.off = document.createElement("canvas");
-    this.offCtx = this.off.getContext("2d");
-    this.canBlur = typeof this.offCtx.filter === "string";
-
-    var small = window.innerWidth < 700;
-    var cfg = SCENE_CFG[scene];
-    var n = small ? Math.round(cfg.n * 0.55) : cfg.n;
-    this.samples = small ? 110 : 160;
-
-    var rand = mulberry32(cfg.seed);
-    this.threads = [];
-    for (var i = 0; i < n; i++) {
-      var u = (n === 1 ? 0 : -1 + 2 * i / (n - 1)) + (rand() * 2 - 1) * 0.012;
-      this.threads.push({
-        lane: Math.tanh(u * 1.7) / Math.tanh(1.7),  // сгущение к центру ленты
-        ph: rand() * TAU,
-        speed: 0.8 + rand() * 0.45,
-        hue: (rand() * 2 - 1) * 0.06
-      });
-    }
-    // Крайние нити рисуем первыми — центральные лягут поверх
-    this.threads.sort(function (a, b) { return Math.abs(b.lane) - Math.abs(a.lane); });
-  }
-
-  Ribbon.prototype.draw = function (struct, phase) {
-    var w = this.canvas.width, h = this.canvas.height;
-    if (!w || !h) return;
-    var o = this.offCtx;
-    o.clearRect(0, 0, w, h);
-    o.lineCap = "round";
-    o.lineJoin = "round";
-    var scale = h / 1080;
-    var gx0 = -0.08 * w, gx1 = 1.08 * w;
-
-    for (var k = 0; k < this.threads.length; k++) {
-      var th = this.threads[k];
-      var edge = Math.abs(th.lane);
-      var alpha = 0.92 - 0.55 * Math.pow(edge, 1.6);
-      var lighten = 0.42 * edge * edge;                // крайние — светлее (глубина)
-      var grad = o.createLinearGradient(gx0, 0, gx1, 0);
-      for (var g = 0; g <= 7; g++) {
-        var xg = -0.08 + 1.16 * (g / 7);
-        grad.addColorStop(g / 7,
-          paletteColor(0.18 + xg * 0.5 + th.lane * 0.16 + th.hue + phase * 0.22, lighten, alpha));
-      }
-      o.strokeStyle = grad;
-      o.lineWidth = Math.max(1, (4.6 - 2.4 * edge) * scale);
-      o.beginPath();
-      for (var j = 0; j < this.samples; j++) {
-        var s = j / (this.samples - 1);
-        var x = (-0.08 + 1.16 * s) * w;
-        var y = threadY(this.scene, s, th.lane, th.ph, th.speed, struct, phase) * h;
-        if (j) o.lineTo(x, y); else o.moveTo(x, y);
-      }
-      o.stroke();
-    }
-
-    // Мягкое свечение: размытая копия под резким слоем
-    var c = this.ctx;
-    c.clearRect(0, 0, w, h);
-    if (this.canBlur) {
-      c.filter = "blur(" + (12 * scale).toFixed(1) + "px)";
-      c.globalAlpha = 0.6;
-      c.drawImage(this.off, 0, 0);
-      c.filter = "none";
-    } else {
-      c.globalAlpha = 0.3;
-      c.drawImage(this.off, -2 * scale, 2 * scale);
-      c.drawImage(this.off, 2 * scale, -2 * scale);
-    }
-    c.globalAlpha = 1;
-    c.drawImage(this.off, 0, 0);
-  };
-
-  /* ---------- Плеер одной cinematic-секции ---------- */
-  function CinePlayer(section) {
-    this.section = section;
-    this.canvas = section.querySelector(".cine-canvas");
-    this.track = section.querySelector(".cine-track");
-    this.track.style.height = (parseInt(section.dataset.track, 10) || 280) + "vh";
-    this.ribbon = new Ribbon(section.dataset.scene, this.canvas);
-    this.visible = false;
-    this.lastPhase = null;
-    this.heroOverlay = section.querySelector("[data-hero-fade]");
-    this.caps = Array.prototype.map.call(section.querySelectorAll(".cap"), function (el) {
-      return {
-        el: el,
-        from: parseFloat(el.dataset.from),
-        to: parseFloat(el.dataset.to)
-      };
-    });
-    this.resize();
-  }
-
-  CinePlayer.prototype.resize = function () {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-    var w = this.canvas.clientWidth, h = this.canvas.clientHeight;
-    if (!w || !h) { w = window.innerWidth; h = window.innerHeight; }
-    this.canvas.width = Math.round(w * dpr);
-    this.canvas.height = Math.round(h * dpr);
-    this.ribbon.off.width = this.canvas.width;
-    this.ribbon.off.height = this.canvas.height;
-    this.dirty = true;
-  };
-
-  CinePlayer.prototype.progress = function () {
-    var rect = this.track.getBoundingClientRect();
-    var span = rect.height - window.innerHeight;
-    if (span <= 0) return 0;
-    return clamp01(-rect.top / span);
-  };
-
-  CinePlayer.prototype.tick = function (clock) {
-    var p = this.progress();
-
-    // Хиро-оверлей растворяется в начале скролла
-    if (this.heroOverlay) {
-      var f = 1 - smooth(p / 0.16);
-      this.heroOverlay.style.opacity = f.toFixed(3);
-      this.heroOverlay.style.transform = "translateY(" + (-34 * (1 - f)).toFixed(1) + "px)";
-      this.heroOverlay.style.pointerEvents = f < 0.05 ? "none" : "";
-    }
-
-    // Подписи: плавный вход/выход в своём диапазоне прогресса.
-    // Сдвиг — через CSS-переменную, чтобы не ломать позиционные transform'ы.
-    for (var i = 0; i < this.caps.length; i++) {
-      var c = this.caps[i];
-      var inO = smooth((p - c.from) / 0.07);
-      var outO = 1 - smooth((p - (c.to - 0.07)) / 0.07);
-      var o = Math.min(inO, outO);
-      c.el.style.opacity = o.toFixed(3);
-      c.el.style.setProperty("--dy", (26 * (1 - o)).toFixed(1) + "px");
-    }
-
-    // Лента: скролл двигает волны, часы добавляют лёгкое «дыхание»
-    var phase = reducedMotion ? 0.35 : p + clock * 0.03;
-    var struct = reducedMotion ? 0.35 : p;
-    if (this.dirty || this.lastPhase === null || Math.abs(phase - this.lastPhase) > 0.0004) {
-      this.ribbon.draw(struct, phase);
-      this.lastPhase = phase;
-      this.dirty = false;
-    }
-  };
-
-  /* ---------- Инициализация всех секций ---------- */
-  var players = Array.prototype.map.call(
-    document.querySelectorAll(".cine"),
-    function (s) { return new CinePlayer(s); }
-  );
-
-  if ("IntersectionObserver" in window) {
-    var vis = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        var pl = players.find(function (p) { return p.section === e.target; });
-        if (pl) pl.visible = e.isIntersecting;
-      });
-    }, { rootMargin: "20% 0px" });
-    players.forEach(function (p) { vis.observe(p.section); });
-  } else {
-    players.forEach(function (p) { p.visible = true; });
-  }
-
-  var resizeT;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(function () {
-      players.forEach(function (p) { p.resize(); });
-    }, 120);
-  });
-
-  function loop(ts) {
-    var clock = (ts || 0) / 1000;
-    for (var i = 0; i < players.length; i++) {
-      if (players[i].visible) players[i].tick(clock);
-    }
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-})();
-</script>
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/SplitText.min.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
